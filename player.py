@@ -28,6 +28,11 @@ class Player:
             print(i.name)
         print()
         input("Press enter to continue...")
+    def inspect(self, item):
+        print("You inspect the " + str(item.name))
+        print("The " + str(item.name) + "is " + str(item.description))
+        print()
+        input("Press enter to continue...")
     def me(self):
         clear()
         print("Checking self actualization",end="")

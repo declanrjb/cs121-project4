@@ -1,4 +1,6 @@
-“me” command (2 points): Create a command that lets the player see their current status, including their health and/or whatever other attributes you’ve added.
+2
+
+x “me” command (2 points): Create a command that lets the player see their current status, including their health and/or whatever other attributes you’ve added.
 
 bigger world (2 points): The game starts with four rooms. That is not enough for much to happen in. Make the world bigger and more interesting. Give descriptions to rooms that say more than just a room number.
 

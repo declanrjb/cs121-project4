@@ -90,6 +90,14 @@ while playing and player.alive:
                 commandSuccess = False
         elif commandWords[0].lower() == "me":
             player.me()
+        elif commandWords[0].lower() == "inspect":
+            targetName = command[8:]
+            target = player.location.getItemByName(targetName)
+            if target != False:
+                player.inspect(target)
+            else:
+                print("No such item.")
+                commandSuccess = False
         else:
             print("Not a valid command")
             commandSuccess = False

@@ -16,6 +16,10 @@ class Player:
         self.items.append(item)
         item.loc = self
         self.location.removeItem(item)
+    def putdown(self, item):
+        self.items.remove(item)
+        item.loc = self
+        self.location.addItem(item)
     def showInventory(self):
         clear()
         print("You are currently carrying:")

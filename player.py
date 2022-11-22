@@ -1,4 +1,5 @@
 import os
+import time
 
 def clear():
     os.system('cls' if os.name == 'nt' else 'clear')
@@ -34,7 +35,14 @@ class Player:
         input("Press enter to continue...")
     def me(self):
         clear()
-        print("Checking self actualization...")
+        print("Checking self actualization",end="")
+        time.sleep(1)
+        print(".",end="")
+        time.sleep(1)
+        print(".",end="")
+        time.sleep(1)
+        print(".")
+        time.sleep(1)
         print("You are currently in " + str(self.location.name))
         print("Your health is " + str(self.health))
         print("You are carrying: ")

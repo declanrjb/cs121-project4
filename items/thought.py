@@ -1,4 +1,4 @@
-from item import Item
+from items.item import Item
 
 class Thought(Item):
     def __init__(self, name, desc, order, blurb):

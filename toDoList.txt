@@ -1,2 +1,4 @@
 To Do List:
 ( )Make health readout poetic
+( )Assignments should follow the player
+( )Secret Boss: Jim Fix in your dreams

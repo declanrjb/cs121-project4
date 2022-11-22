@@ -88,6 +88,8 @@ while playing and player.alive:
             else:
                 print("No such monster.")
                 commandSuccess = False
+        elif commandWords[0].lower() == "me":
+            player.me()
         else:
             print("Not a valid command")
             commandSuccess = False

@@ -23,6 +23,20 @@ class Player:
             print(i.name)
         print()
         input("Press enter to continue...")
+    def me(self):
+        clear()
+        print("Checking self actualization...")
+        print("You are currently in " + str(self.location.name))
+        print("Your health is " + str(self.health))
+        print("You are carrying: ")
+        for i in self.items:
+            print(i.name)
+        print()
+        if self.alive:
+            print("And you aren't dead yet!")
+        else:
+            print("And you are now dead :(")
+        input("Press enter to continue...")
     def attackMonster(self, mon):
         clear()
         print("You are attacking " + mon.name)

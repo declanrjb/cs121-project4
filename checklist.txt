@@ -1,0 +1,69 @@
+“me” command (2 points): Create a command that lets the player see their current status, including their health and/or whatever other attributes you’ve added.
+
+bigger world (2 points): The game starts with four rooms. That is not enough for much to happen in. Make the world bigger and more interesting. Give descriptions to rooms that say more than just a room number.
+
+“inspect” command (2 points): Create a command that lets the player look at items. This should display the item description. The player should be able to look at both items they see in their current location and items in their inventory.
+
+limited inventory (2 points): Make objects you’re carrying have a size or weight, and put a limit on how much you can carry.
+
+“drop” command (2 points): Make it so that the player can drop items, so that their inventory doesn’t become unreasonably large.
+
+weapons (2 points): Implement a new type of item for weapons, ones that a player can use to make themselves more formidable in battle. This will requires modifying how fights against monsters work.
+
+armor (2 points): Implement a type of item for armor. These make it harder for a monster to kill the player.
+
+healing items (2 points): Create items that players can use to restore health. These items should only be usable once each and should disappear when used.
+
+item stacking (2 points): Make the inventory display ‘(x2)’ if there are two identical items (and so on, if there are more), rather than listing the item name twice.
+
+introducing monsters during play (2 points): Make it so that over time new monsters appear in the world.
+
+“wait” command (2 points): In the game as it is, time passes only when you move to a new room. Make it so that you can type a command that just lets time pass. Or implement a trickier version: let the user type a number so they can wait for a number of turns with only one command entry.
+
+regeneration (2 points): Have the player regenerate in some way over time. The easiest thing is to make health increase a little each turn, but there are other things you could do as well.
+
+locked chests (3 points): Create “chests” or other containers that cannot be opened without a key, and also the relevant keys.
+
+locked doors (3 points): Create doors that cannot be used unless first unlocked with a key, and also the relevant keys.
+
+containers (3 points): Make containers (bags, boxes, etc.) that can hold other objects.
+
+victory condition (3 points): Create a way for the player to win the game.
+
+random world (3 points): Make the world be generated in a random way when the program is run so that it’s somewhat different each time the game is played.
+
+loot (3 points): Make it so that defeating some monsters causes useful items to appear. There should be some amount of randomness about what those items are.
+
+events (3 points): Make it so that interesting things sometimes happen. Their ocurrence can be governed by a timer or they could happen just at random.
+
+more monsters (3 points): Create several different types of monsters. They should not just have different names, but really be different in important ways.
+
+special rooms (3 points): Make rooms that have some effect on the player or monsters when they are entered. Maybe there’s a hospital that heals you when you enter it? That sort of thing.
+
+complex rooms (3 points): Give rooms some additional attributes or behavior. Maybe they get dirty? Or full? Or different types behave differently?
+
+player attributes (3 points): By default the only characteristic of the player is their health. Add more attributes that affect what the player can do.
+
+command abbreviations (1-3 points): The typing needed to play a text adventure can get tedious. Usually games allow abbreviations. This could simply just be some short, alternate commands (“inv” instead of “inventory”, etc.) or, more ambitiously, you could accept any string that is the start of only one command. And/or you could allow items, monsters, and other things to be abbreviated in some consistent way.
+
+helper (4 points): Create an autonomous character that is on your side and does something helpful. You should have some ability to control/influence how they behave. Maybe you need to ask for their help or ask them to join/follow you in your quest, etc.
+
+currency (4 points): Create a currency for the game. There should be a way for the player to gain currency, and also useful ways for them to spend the currency. (A merchant? a store?)
+
+leveling up (4 points): Add a mechanism for “leveling up” the player. That is, as they accomplish things in the game, the player should get stronger in some way.
+
+crafting (4 points): Create some system where the player can use an item, or several items, to construct a useful item.
+
+magic (4 points): Create a system where the player has “spells” (or “abilities,” whatever best fits your theme) that they can use (possibly learned during the game). There should be some restriction on how often spells can be cast.
+
+characters (4 points): Characters are neutral beings in the game that you can talk to and interact with. (The “talking to” can be a matter of picking one of several options of things to say from a list.) They should interact with you or the world in some way when you talk to them. This should be different than the “helper” above (that is, if you make a helper character, then you need another character to get credit for this option).
+
+modifying the world (4 points): Allow the player to modify rooms/locations in some way, more than just by grabbing/dropping objects. The changes they make should have a real effect on the gameplay. This could be something like lighting a candle that allows you to see the contents of the room, but only if you are carrying matches. It could be digging a hole that traps monsters. It could be turning on a faucet to flood a room that eventually floods nearby rooms. Perhaps you can make it so that the player creates new rooms or locations with an action.
+
+map (3 to 6 points): Allow the player to gain the ability to inspect a map of the world. Or give them the ability to look at a map from the start, but make it so that the contents of the map are slowly revealed (say, as rooms are explored). The map can just be “ASCII art,” a printed display. This is worth more points if you have a larger/complex world, or display some interesting things in each location, or limit the map in some way.
+
+saving the game (10 points) : Let a player choose to save their game to come back to later. This should create a file in the folder where the program is stored (or maybe in a “saved” subfolder of that folder) with a name specified by the user. On starting the program, the user should have the option to continue from the point at which they saved, instead of creating a new game.
+
+graphical interface (10 points): Typing is annoying. Make the program work through a graphical interface instead of typed commands. You don’t have to create pictures that actually look like the world. You can have a window, with portions dedicated to displaying the description of the current room, what monsters, are there, what items are there, etc. Within this interface, actions should be made by clicking buttons with the mouse or by hitting single keys as controls, rather than just through typing commands. Common options here are the curses library or the “Tk interactive” library tkinter.
+
+choose your own (? points): Make whatever changes you want, beyond the required points, if it helps make the game better. If it’s important to you to get points for these changes, talk to Jim, David, or Eitan to figure out how many points they are worth.

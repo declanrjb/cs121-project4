@@ -29,8 +29,8 @@ class Player:
         print()
         input("Press enter to continue...")
     def inspect(self, item):
-        print("You inspect the " + str(item.name))
-        print("The " + str(item.name) + "is " + str(item.description))
+        print("You inspect the " + str(item.name) + ".")
+        print(str(item.desc))
         print()
         input("Press enter to continue...")
     def me(self):

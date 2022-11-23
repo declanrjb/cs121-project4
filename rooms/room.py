@@ -7,6 +7,7 @@ class Room:
         self.exits = []
         self.items = []
         self.name = description #This is a placeholder to make it work, flesh it out later
+        self.playerHere = False
     def addExit(self, exitName, destination):
         self.exits.append([exitName, destination])
     def getDestination(self, direction):

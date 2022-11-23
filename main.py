@@ -1,7 +1,8 @@
-from room import Room
+from rooms.room import Room
 from player import Player
-from item import Item
-from monster import Monster
+from items.item import Item
+from monsters.monster import Monster
+from monsters.assignment import Assignment
 import os
 import updater
 
@@ -19,7 +20,7 @@ def createWorld():
     i = Item("Rock", "This is just a rock.")
     i.putInRoom(b)
     player.location = a
-    Monster("Bob the monster", 20, b)
+    Assignment("Bob the monster", 20, b, 7, 1)
 
 def clear():
     os.system('cls' if os.name == 'nt' else 'clear')

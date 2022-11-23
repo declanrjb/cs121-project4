@@ -8,4 +8,7 @@ class Assignment(Monster):
         self.speed = speed
     def update(self):
         if random.random() < self.speed:
-            self.moveTo(self.room.randomNeighbor())
+            if self.findPlayer() in self.room.exits:
+                self.moveTo(self.findPlayer())
+            if self.findPlayer() == None:
+                self.moveTo(self.room.randomNeighbor())

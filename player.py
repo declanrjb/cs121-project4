@@ -18,10 +18,11 @@ class Player:
         self.items.append(item)
         item.loc = self
         self.location.removeItem(item)
-    def putdown(self, item):
-        self.items.remove(item)
-        item.loc = self
-        self.location.addItem(item)
+    def drop(self, item):
+        while self.items.count(item) != 0:
+            self.items.remove(item)
+            item.loc = self
+            self.location.addItem(item)
     def showInventory(self):
         clear()
         print("You are currently carrying:")
@@ -29,6 +30,7 @@ class Player:
         for i in self.items:
             print(i.name)
         print()
+        print(self.items)
         input("Press enter to continue...")
     def inspect(self, item):
         print("You inspect the " + str(item.name) + ".")

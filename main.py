@@ -52,6 +52,14 @@ def showHelp():
     print()
     input("Press enter to continue...")
 
+#Search a list for an item, returning either true or false
+def inList(list, search):
+    contained = False
+    for item in list:
+        if item == search:
+            contained = True
+    return contained
+
 
 
 createWorld()
@@ -98,6 +106,16 @@ while playing and player.alive:
                 player.inspect(target)
             else:
                 print("No such item.")
+                commandSuccess = False
+        elif commandWords[0].lower() == "drop":
+            targetName = command[5:]
+            dropped = False
+            for item in player.items:
+                if item.name.lower() == targetName.lower():
+                    player.drop(target)
+                    dropped = True
+            if dropped != True:
+                print("You are not carrying that item.")
                 commandSuccess = False
         else:
             print("Not a valid command")

@@ -1,6 +1,7 @@
 from rooms.room import Room
 from player import Player
-from items.item import Item
+from items.item import *
+from items.thought import *
 from monsters.monster import Monster
 from monsters.assignment import Assignment
 import os
@@ -18,7 +19,9 @@ def createWorld():
     Room.connectRooms(a, "north", c, "south")
     Room.connectRooms(b, "north", d, "south")
     i = Item("Rock", "This is just a rock.")
+    thought1 = Thought("Thought1",1)
     i.putInRoom(b)
+    thought1.putInRoom(b)
     player.location = a
     Assignment("Bob the monster", 20, b, 7, 1)
 

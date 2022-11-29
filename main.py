@@ -121,6 +121,18 @@ while playing and player.alive:
         if commandWords[0].lower() == "go":   #cannot handle multi-word directions
             player.goDirection(commandWords[1]) 
             timePasses = True
+        elif commandWords[0].lower() == "wait":   #Update the updater several iterations when asked
+            def wait_some_turns(turns):
+                i = 0
+                while i < turns:
+                    updater.updateAll()
+                    i += 1
+            
+            turns = int(command[5:])
+            wait_some_turns(turns)
+            print(str(turns) + " minutes go by. Time passes so slowly in this place.")
+            print()
+            input("Press enter to continue...")
         elif commandWords[0].lower() == "pickup":  #can handle multi-word objects
             targetName = command[7:]
             target = player.location.getItemByName(targetName)

@@ -29,7 +29,7 @@ class Player:
             print("Too many thoughts...\n...I need to clear my head a bit.")
     def drop(self, item):
         #Remove all copies of the item
-        if item in self.items.keys():
+        while item in self.items.keys():
             self.items.pop(item)
             item.loc = self
             self.location.addItem(item)

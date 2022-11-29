@@ -1,4 +1,4 @@
-Total Points: 18
+Total Points: 20
 
 (x) “me” command (2 points): Create a command that lets the player see their current status, including their health and/or whatever other attributes you’ve added.
 
@@ -20,7 +20,7 @@ Total Points: 18
 
 ( ) introducing monsters during play (2 points): Make it so that over time new monsters appear in the world.
 
-( ) “wait” command (2 points): In the game as it is, time passes only when you move to a new room. Make it so that you can type a command that just lets time pass. Or implement a trickier version: let the user type a number so they can wait for a number of turns with only one command entry.
+(x) “wait” command (2 points): In the game as it is, time passes only when you move to a new room. Make it so that you can type a command that just lets time pass. Or implement a trickier version: let the user type a number so they can wait for a number of turns with only one command entry.
 
 ( ) regeneration (2 points): Have the player regenerate in some way over time. The easiest thing is to make health increase a little each turn, but there are other things you could do as well.
 

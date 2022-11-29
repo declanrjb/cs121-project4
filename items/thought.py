@@ -2,9 +2,9 @@ from items.item import Item
 import random
 
 class Thought(Item):
-    def __init__(self, name, order):
+    def __init__(self, name, destination):
         Item.__init__(self, name, "This is a thought.")
-        self.order = order
+        self.destination = destination
         #Declare a preset list of possible blurbs
         blurbs = [
             "I really need to do the HUM reading",

@@ -118,7 +118,7 @@ while playing and player.alive:
                 print("No such item.")
                 commandSuccess = False
         elif commandWords[0].lower() == "inventory":
-            player.showInventory()        
+            player.inventory()        
         elif commandWords[0].lower() == "help":
             showHelp()
         elif commandWords[0].lower() == "exit":

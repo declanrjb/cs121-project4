@@ -1,5 +1,4 @@
 import os
-import time
 
 def clear():
     os.system('cls' if os.name == 'nt' else 'clear')
@@ -10,47 +9,53 @@ class Player:
         self.items = []
         self.health = 50
         self.alive = True
+        self.headspace = 50
     def goDirection(self, direction):
         self.location.playerHere = False
         self.location = self.location.getDestination(direction)
         self.location.playerHere = True
     def pickup(self, item):
-        self.items.append(item)
-        item.loc = self
-        self.location.removeItem(item)
-        if item.__class__.__name__ == "Thought":
-            item.printBlurb()
+        if self.headspace - item.weight > 0:
+            self.items.append(item)
+            item.loc = self
+            self.location.removeItem(item)
+            if item.__class__.__name__ == "Thought":
+                item.printBlurb()
+        else:
+            print("Too many thoughts...\n...I need to clear my head a bit.")
     def drop(self, item):
         while self.items.count(item) != 0:
             self.items.remove(item)
             item.loc = self
             self.location.addItem(item)
-    def showInventory(self):
+    def inventory(self):
         clear()
-        print("You are currently carrying:")
+        print("I'm thinking about:")
         print()
         for i in self.items:
             print(i.name)
         print()
         input("Press enter to continue...")
     def inspect(self, item):
-        print("You inspect the " + str(item.name) + ".")
+        print("What's this? It seems to be a " + str(item.name) + ".")
         print(str(item.desc))
         print()
         input("Press enter to continue...")
     def me(self):
         clear()
-        print("Checking self actualization", end="")
-        time.sleep(1)
-        print(".", end="")
-        time.sleep(1)
-        print(".", end="")
-        time.sleep(1)
-        print(".")
-        time.sleep(1)
-        print("You are currently in " + str(self.location.name))
-        print("Your health is " + str(self.health))
-        print("You are carrying: ")
+        print("Checking self actualization...")
+        print("I'm currently in " + str(self.location.name) + ",")
+        if self.health < 10:
+            print("AAaaaaaaaAAAAAAAAAaAaAaAaAaAAaAaAAaAaAaaaaaaAAaAAAaaAAaAaaaaAAAAAAA!")
+        elif self.health < 20:
+            print("and I could really use some chocolate right about now....")
+        elif self.health < 30:
+            print("and I exist.")
+        elif self.health < 40:
+            print("and every little thing gonna be alright.")
+        else:
+            print("and nothing can stop me!")
+        print("I'm thinking about: ")
         for i in self.items:
             print(i.name)
         print()

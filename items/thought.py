@@ -2,8 +2,8 @@ from items.item import Item
 import random
 
 class Thought(Item):
-    def __init__(self, name, destination):
-        Item.__init__(self, name, "This is a thought.")
+    def __init__(self, name, desc, weight, destination):
+        Item.__init__(self, name, desc, weight)
         self.destination = destination
         #Declare a preset list of possible blurbs
         blurbs = [

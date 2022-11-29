@@ -1,4 +1,4 @@
-Total Points: 15
+Total Points: 18
 
 (x) “me” command (2 points): Create a command that lets the player see their current status, including their health and/or whatever other attributes you’ve added.
 
@@ -30,7 +30,7 @@ Total Points: 15
 
 ( ) containers (3 points): Make containers (bags, boxes, etc.) that can hold other objects.
 
-( ) victory condition (3 points): Create a way for the player to win the game.
+(x) victory condition (3 points): Create a way for the player to win the game.
 
 ( ) random world (3 points): Make the world be generated in a random way when the program is run so that it’s somewhat different each time the game is played.
 

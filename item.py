@@ -20,8 +20,8 @@ class Item:
         room.addItem(self)
 
 class Thought(Item):
-    def __init__(self, name, desc, weight, destination):
-        Item.__init__(self, name, desc, weight)
+    def __init__(self, name, weight, destination):
+        Item.__init__(self, name, "This is just a thought.", weight)
         self.destination = destination
         #Declare a preset list of possible blurbs
         blurbs = [

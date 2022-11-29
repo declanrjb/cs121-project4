@@ -87,6 +87,7 @@ def inList(list, search):
 
 createWorld()
 playing = True
+possibleCommands = ["go","pickup","inventory","help","exit","attack","me","inspect","drop"]
 while playing and player.alive:
     printSituation()
     commandSuccess = False
@@ -95,6 +96,16 @@ while playing and player.alive:
         commandSuccess = True
         command = input("What now? ")
         commandWords = command.split()
+        slice = commandWords[0].lower()
+        length = len(slice)
+        possibleMatches = 0
+        match = ""
+        for command in possibleCommands:
+            if command[0:length] == slice:
+                possibleMatches += 1
+                match = command
+        if possibleMatches == 1:
+            commandWords = match.split()
         if commandWords[0].lower() == "go":   #cannot handle multi-word directions
             player.goDirection(commandWords[1]) 
             timePasses = True

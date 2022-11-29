@@ -1,4 +1,4 @@
-Total Points: 8
+Total Points: 11
 
 (x) “me” command (2 points): Create a command that lets the player see their current status, including their health and/or whatever other attributes you’ve added.
 
@@ -46,7 +46,7 @@ Total Points: 8
 
 ( ) player attributes (3 points): By default the only characteristic of the player is their health. Add more attributes that affect what the player can do.
 
-( ) command abbreviations (1-3 points): The typing needed to play a text adventure can get tedious. Usually games allow abbreviations. This could simply just be some short, alternate commands (“inv” instead of “inventory”, etc.) or, more ambitiously, you could accept any string that is the start of only one command. And/or you could allow items, monsters, and other things to be abbreviated in some consistent way.
+(x) command abbreviations (1-3 points): The typing needed to play a text adventure can get tedious. Usually games allow abbreviations. This could simply just be some short, alternate commands (“inv” instead of “inventory”, etc.) or, more ambitiously, you could accept any string that is the start of only one command. And/or you could allow items, monsters, and other things to be abbreviated in some consistent way.
 
 ( ) helper (4 points): Create an autonomous character that is on your side and does something helpful. You should have some ability to control/influence how they behave. Maybe you need to ask for their help or ask them to join/follow you in your quest, etc.
 

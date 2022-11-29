@@ -154,12 +154,14 @@ while playing and player.alive:
                 commandSuccess = False
         elif commandWords[0].lower() == "drop":
             targetName = command[5:]
-            dropped = False
-            for item in player.items:
+            dropped = None
+            itemsTemp = player.items
+            for item in itemsTemp:
                 if item.name.lower() == targetName.lower():
-                    player.drop(target)
-                    dropped = True
-            if dropped != True:
+                    dropped = item
+            if dropped != None:
+                player.drop(dropped)
+            else:
                 print("You are not carrying that item.")
                 commandSuccess = False
         elif commandWords[0].lower() == "checkvictory":

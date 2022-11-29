@@ -1,5 +1,23 @@
-from items.item import Item
+import os
 import random
+
+def clear():
+    os.system('cls' if os.name == 'nt' else 'clear')
+
+class Item:
+    def __init__(self, name, desc, weight):
+        self.name = name
+        self.desc = desc
+        self.loc = None
+        self.weight = weight
+    def describe(self):
+        clear()
+        print(self.desc)
+        print()
+        input("Press enter to continue...")
+    def putInRoom(self, room):
+        self.loc = room
+        room.addItem(self)
 
 class Thought(Item):
     def __init__(self, name, desc, weight, destination):

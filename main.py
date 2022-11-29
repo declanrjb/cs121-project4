@@ -1,9 +1,7 @@
-from rooms.room import Room
+from room import *
 from player import Player
-from items.item import *
-from items.thought import *
-from monsters.monster import Monster
-from monsters.assignment import Assignment
+from item import *
+from monster import *
 import os
 import updater
 

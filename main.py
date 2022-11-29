@@ -99,9 +99,28 @@ def checkVictory(rooms):
 loading = input("Would you like to load a previous game? ")
 if loading == "yes":
     filecore = input("What save file would you like to load from? ")
+    
     playerfile = filecore + "PLAYER.txt"
     player.load(playerfile)
+
+    def load_world(filename):
+        print(filename)
+        file = open(filename, "r")
+        rooms = list(file.readline())
+        while file.readline() != None:
+            if file.readline() == "START-NEW-ROOM":
+                currRoom = Room("","")
+                currRoom.desc = str(file.readline())
+                currRoom.monsters = list(file.readline())
+                currRoom.exits = list(file.readline())
+                currRoom.items = list(file.readline())
+                currRoom.name = str(file.readline())
+                currRoom.playerHere = bool(file.readline())
+        return rooms
     
+    worldfile = filecore + "WORLD.txt"
+    rooms = load_world(worldfile)
+
     print()
     print("Game loaded succesfully.")
     input("Press enter to continue...")
@@ -179,11 +198,22 @@ while playing and player.alive:
             def save_world(savename):
                 filename = savename + "WORLD" + ".txt"
                 file = open(filename, "w")
+                file.write(str(rooms) + "\n")
+                file.write("START-ROOMS-LIST" + "\n")
                 for room in rooms:
-                    
+                    file.write("START-NEW-ROOM" + "\n")
+                    file.write(str(room) + "\n")
+                    file.write(str(room.desc) + "\n")
+                    file.write(str(room.monsters) + "\n")
+                    file.write(str(room.exits) + "\n")
+                    file.write(str(room.items) + "\n")
+                    file.write(str(room.name) + "\n")
+                    file.write(str(room.playerHere) + "\n")
+                file.close()
             
             savename = input("Saving game. Enter a file name: ")
             save_player(savename)
+            save_world(savename)
             print()
             print("Game saved succesfully.")
             input("Press enter to continue...")

@@ -1,5 +1,5 @@
-<room.Room object at 0x102758d90>
-{<item.Item object at 0x1027c2710>: 1}
+<room.Room object at 0x1031c4d90>
+{}
 50
 True
-49
+50

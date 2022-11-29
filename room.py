@@ -1,12 +1,12 @@
 import random
 
 class Room:
-    def __init__(self, description):
+    def __init__(self, name, description):
         self.desc = description
         self.monsters = []
         self.exits = []
         self.items = []
-        self.name = description #This is a placeholder to make it work, flesh it out later
+        self.name = name
         self.playerHere = False
     def addExit(self, exitName, destination):
         self.exits.append([exitName, destination])
@@ -44,3 +44,5 @@ class Room:
         return False
     def randomNeighbor(self):
         return random.choice(self.exits)[1]
+
+#class puzzleRoom(Room):

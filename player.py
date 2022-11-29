@@ -6,7 +6,7 @@ def clear():
 class Player:
     def __init__(self):
         self.location = None
-        self.items = []
+        self.items = {}
         self.health = 50
         self.alive = True
         self.headspace = 50
@@ -16,9 +16,13 @@ class Player:
         self.location.playerHere = True
     def pickup(self, item):
         if self.headspace - item.weight > 0:
-            self.items.append(item)
+            if item not in self.items.keys():    
+                self.items[item] = 1
+            else:
+                self.items[item] += 1
             item.loc = self
             self.location.removeItem(item)
+            self.headspace -= item.weight
             if item.__class__.__name__ == "Thought":
                 item.printBlurb()
         else:
@@ -32,8 +36,8 @@ class Player:
         clear()
         print("I'm thinking about:")
         print()
-        for i in self.items:
-            print(i.name)
+        for item in self.items:
+            print(item.name+"*"+str(self.items[item]))
         print()
         input("Press enter to continue...")
     def inspect(self, item):

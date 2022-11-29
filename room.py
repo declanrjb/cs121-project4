@@ -32,7 +32,6 @@ class Room:
         return self.items != []
     def getItemByName(self, name):
         for i in self.items:
-            print(i.name.lower())
             if i.name.lower() == name.lower():
                 return i
         return False

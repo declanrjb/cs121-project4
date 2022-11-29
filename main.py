@@ -39,7 +39,7 @@ def createWorld():
     Room.connectRooms(distractions,"south",excuses,"north")
 
     i = Item("Rock", "This is just a rock.", 1)
-    thought1 = Thought("Thought1",0,center_brain)
+    thought1 = Thought("Thought1",0)
     i.putInRoom(center_brain)
     thought1.putInRoom(useful_programming)
     player.location = center_brain
@@ -90,7 +90,7 @@ def checkVictory(rooms):
     for room in rooms:
         for item in room.items:
             if item.__class__.__name__ == "Thought":
-                if item.destination != room:
+                if item.destination != room.name.lower():
                     victory = False
     return victory
 
@@ -99,7 +99,7 @@ def checkVictory(rooms):
 
 rooms = createWorld()
 playing = True
-possibleCommands = ["go","pickup","inventory","help","exit","attack","me","inspect","drop"]
+possibleCommands = ["go","pickup","inventory","help","exit","attack","me","inspect","drop","wait"]
 while playing and player.alive:
     printSituation()
     commandSuccess = False

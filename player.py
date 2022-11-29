@@ -28,8 +28,9 @@ class Player:
         else:
             print("Too many thoughts...\n...I need to clear my head a bit.")
     def drop(self, item):
-        while self.items.count(item) != 0:
-            self.items.remove(item)
+        #Remove all copies of the item
+        while item in self.items.keys():
+            self.items.pop(item)
             item.loc = self
             self.location.addItem(item)
     def inventory(self):

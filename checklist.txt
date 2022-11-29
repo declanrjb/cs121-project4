@@ -1,8 +1,8 @@
-Total Points: 6
+Total Points: 8
 
 (x) “me” command (2 points): Create a command that lets the player see their current status, including their health and/or whatever other attributes you’ve added.
 
-( ) bigger world (2 points): The game starts with four rooms. That is not enough for much to happen in. Make the world bigger and more interesting. Give descriptions to rooms that say more than just a room number.
+(x) bigger world (2 points): The game starts with four rooms. That is not enough for much to happen in. Make the world bigger and more interesting. Give descriptions to rooms that say more than just a room number.
 
 (x) “inspect” command (2 points): Create a command that lets the player look at items. This should display the item description. The player should be able to look at both items they see in their current location and items in their inventory.
 

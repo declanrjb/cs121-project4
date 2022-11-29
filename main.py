@@ -10,20 +10,40 @@ import updater
 player = Player()
 
 def createWorld():
-    a = Room("You are in room 1")
-    b = Room("You are in room 2")
-    c = Room("You are in room 3")
-    d = Room("You are in room 4")
-    Room.connectRooms(a, "east", b, "west")
-    Room.connectRooms(c, "east", d, "west")
-    Room.connectRooms(a, "north", c, "south")
-    Room.connectRooms(b, "north", d, "south")
+    #Build rooms
+    center_brain = Room("You are now in the center of the brain.")
+    useful_programming = Room("You are now in the chamber of useful programming knowledge, a hallowed space filled mostly with CSC1 121 lecture notes.")
+    lazy_hacks = Room("You are now in the room of lazy hacks. Every surface, from floor to walls to ceiling, is a chalkboard - but most of the notes you've taken there are covered up by the shelves of Stack Overflow comments.")
+    programmer_humor = Room("You have entered the sanctum of programmer humor, a place of many memes stolen from many subreddits.")
+    bad_jokes = Room("You are now in the room of bad jokes. And I mean *really* bad jokes. Abandon hope, all ye who enter here.")
+    sci_fi = Room("You are now in the vault of out of place sci-fi references, a room strangely larger than any other in this brain.")
+    productive_thought = Room("You are now in the room of productive academic thought. Sadly, there's quite a lot of dust here.")
+    distractions = Room("You are now in the room of distractions - Hey, did you know the new NK Jemisin book just came out?")
+    excuses = Room("Listen, it's not your fault you've entered the room of excuses. Somebody else made you do it.")
+
+    #Build center_brain connections
+    Room.connectRooms(center_brain,"north",useful_programming,"south")
+    Room.connectRooms(center_brain,"east",productive_thought,"west")
+    Room.connectRooms(center_brain,"south",distractions,"north")
+    Room.connectRooms(center_brain,"west",sci_fi,"east")
+
+    #Build useful_programming connections
+    Room.connectRooms(useful_programming,"east",lazy_hacks,"west")
+    Room.connectRooms(useful_programming,"west",programmer_humor,"east")
+
+    #Build programmer_humor connections
+    Room.connectRooms(programmer_humor,"west",bad_jokes,"east")
+    Room.connectRooms(programmer_humor,"south",sci_fi,"north")
+
+    #Build distractions connections
+    Room.connectRooms(distractions,"south",excuses,"north")
+
     i = Item("Rock", "This is just a rock.")
-    thought1 = Thought("Thought1",1)
-    i.putInRoom(b)
-    thought1.putInRoom(b)
-    player.location = a
-    Assignment("Bob the monster", 20, b, 7, 1)
+    thought1 = Thought("Thought1",center_brain)
+    i.putInRoom(center_brain)
+    thought1.putInRoom(useful_programming)
+    player.location = center_brain
+    Assignment("Bob the monster", 20, excuses, 7, 1)
 
 def clear():
     os.system('cls' if os.name == 'nt' else 'clear')

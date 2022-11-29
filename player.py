@@ -33,6 +33,13 @@ class Player:
             self.items.pop(item)
             item.loc = self
             self.location.addItem(item)
+    def load(self, filename):
+        file = open(filename, "r")
+        self.location = file.readline()
+        self.items = file.readline()
+        self.health = file.readline()
+        self.alive = file.readline()
+        self.headspace = file.readline()
     def inventory(self):
         clear()
         print("I'm thinking about:")

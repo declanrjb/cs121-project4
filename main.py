@@ -96,8 +96,17 @@ def checkVictory(rooms):
 
 
 
-
-rooms = createWorld()
+loading = input("Would you like to load a previous game? ")
+if loading == "yes":
+    filecore = input("What save file would you like to load from? ")
+    playerfile = filecore + "PLAYER.txt"
+    player.load(playerfile)
+    
+    print()
+    print("Game loaded succesfully.")
+    input("Press enter to continue...")
+else:
+    rooms = createWorld()
 playing = True
 possibleCommands = ["go","pickup","inventory","help","exit","attack","me","inspect","drop","wait"]
 while playing and player.alive:
@@ -156,6 +165,28 @@ while playing and player.alive:
                 commandSuccess = False
         elif commandWords[0].lower() == "me":
             player.me()
+        elif commandWords[0].lower() == "save":
+            def save_player(savename):
+                filename = savename + "PLAYER" + ".txt"
+                file = open(filename, "w")
+                file.write(str(player.location) + "\n")
+                file.write(str(player.items) + "\n")
+                file.write(str(player.health) + "\n")
+                file.write(str(player.alive) + "\n")
+                file.write(str(player.headspace) + "\n")
+                file.close()
+            
+            def save_world(savename):
+                filename = savename + "WORLD" + ".txt"
+                file = open(filename, "w")
+                for room in rooms:
+                    
+            
+            savename = input("Saving game. Enter a file name: ")
+            save_player(savename)
+            print()
+            print("Game saved succesfully.")
+            input("Press enter to continue...")
         elif commandWords[0].lower() == "inspect":
             targetName = command[8:]
             target = player.location.getItemByName(targetName)

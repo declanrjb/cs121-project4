@@ -1,0 +1,5 @@
+<room.Room object at 0x100ff3a30>
+{<item.Thought object at 0x100ff3640>: 1}
+50
+True
+49

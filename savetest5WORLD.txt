@@ -1,0 +1,64 @@
+START-ROOMS-LIST
+START-NEW-ROOM
+You are now in the center of the brain.
+[]
+[['north', <room.Room object at 0x10459fd00>], ['east', <room.Room object at 0x10459fa00>], ['south', <room.Room object at 0x10459f9d0>], ['west', <room.Room object at 0x10459fa60>]]
+[]
+center_brain
+False
+START-NEW-ROOM
+You are now in the chamber of useful programming knowledge, a hallowed space filled mostly with CSC1 121 lecture notes.
+[]
+[['south', <room.Room object at 0x104538d90>], ['east', <room.Room object at 0x10459fdf0>], ['west', <room.Room object at 0x10459fd60>]]
+[<item.Item object at 0x10459f970>]
+useful_programming
+True
+START-NEW-ROOM
+You are now in the room of lazy hacks. Every surface, from floor to walls to ceiling, is a chalkboard - but most of the notes you've taken there are covered up by the shelves of Stack Overflow comments.
+[]
+[['west', <room.Room object at 0x10459fd00>]]
+[]
+lazy_hacks
+False
+START-NEW-ROOM
+You have entered the sanctum of programmer humor, a place of many memes stolen from many subreddits.
+[]
+[['east', <room.Room object at 0x10459fd00>], ['west', <room.Room object at 0x10459fd30>], ['south', <room.Room object at 0x10459fa60>]]
+[]
+programmer_humor
+False
+START-NEW-ROOM
+You are now in the room of bad jokes. And I mean *really* bad jokes. Abandon hope, all ye who enter here.
+[]
+[['east', <room.Room object at 0x10459fd60>]]
+[]
+bad_jokes
+False
+START-NEW-ROOM
+You are now in the vault of out of place sci-fi references, a room strangely larger than any other in this brain.
+[]
+[['east', <room.Room object at 0x104538d90>], ['north', <room.Room object at 0x10459fd60>]]
+[]
+sci_fi
+False
+START-NEW-ROOM
+You are now in the room of productive academic thought. Sadly, there's quite a lot of dust here.
+[]
+[['west', <room.Room object at 0x104538d90>]]
+[]
+productive_thought
+False
+START-NEW-ROOM
+You are now in the room of distractions - Hey, did you know the new NK Jemisin book just came out?
+[<monster.Assignment object at 0x10459f8e0>]
+[['north', <room.Room object at 0x104538d90>], ['south', <room.Room object at 0x10459f9a0>]]
+[]
+distractions
+False
+START-NEW-ROOM
+Listen, it's not your fault you've entered the room of excuses. Somebody else made you do it.
+[]
+[['north', <room.Room object at 0x10459f9d0>]]
+[]
+excuses
+False

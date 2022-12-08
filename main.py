@@ -4,6 +4,7 @@ from item import *
 from monster import *
 import os
 import updater
+import ctypes
 
 player = Player()
 
@@ -99,27 +100,40 @@ def checkVictory(rooms):
 loading = input("Would you like to load a previous game? ")
 if loading == "yes":
     filecore = input("What save file would you like to load from? ")
-    
-    playerfile = filecore + "PLAYER.txt"
-    player.load(playerfile)
 
     def load_world(filename):
-        print(filename)
         file = open(filename, "r")
-        rooms = list(file.readline())
-        while file.readline() != None:
-            if file.readline() == "START-NEW-ROOM":
+        rooms = []
+        line = file.readline().replace("\n","")
+        line = line.replace("\n","")
+        while line != "":
+            if line == "START-NEW-ROOM":
+                print("*room found*")
                 currRoom = Room("","")
-                currRoom.desc = str(file.readline())
-                currRoom.monsters = list(file.readline())
-                currRoom.exits = list(file.readline())
-                currRoom.items = list(file.readline())
-                currRoom.name = str(file.readline())
-                currRoom.playerHere = bool(file.readline())
+                currRoom.desc = str(file.readline().replace("\n",""))
+                monsters = (file.readline().replace("\n",""))
+                monsters = monsters.strip('][').split(', ')
+                print(monsters)
+                for monstPointer in monsters:
+                    monstPointer = monstPointer.strip('][')
+                    print(monstPointer)
+                    if len(monstPointer) > 1:
+                        currRoom.monsters.append(ctypes.cast(monstPointer,ctypes.py_object).value)
+                currRoom.exits = list(file.readline().replace("\n",""))
+                currRoom.items = list(file.readline().replace("\n",""))
+                currRoom.name = str(file.readline().replace("\n",""))
+                currRoom.playerHere = bool(file.readline().replace("\n",""))
+                print(currRoom.monsters)
+                rooms.append(currRoom)
+            line = file.readline().replace("\n","")
+            line = line.replace("\n","")
         return rooms
     
     worldfile = filecore + "WORLD.txt"
     rooms = load_world(worldfile)
+
+    playerfile = filecore + "PLAYER.txt"
+    player.load(playerfile,rooms)
 
     print()
     print("Game loaded succesfully.")
@@ -188,7 +202,7 @@ while playing and player.alive:
             def save_player(savename):
                 filename = savename + "PLAYER" + ".txt"
                 file = open(filename, "w")
-                file.write(str(player.location) + "\n")
+                file.write(str(player.location.name) + "\n")
                 file.write(str(player.items) + "\n")
                 file.write(str(player.health) + "\n")
                 file.write(str(player.alive) + "\n")
@@ -198,11 +212,10 @@ while playing and player.alive:
             def save_world(savename):
                 filename = savename + "WORLD" + ".txt"
                 file = open(filename, "w")
-                file.write(str(rooms) + "\n")
                 file.write("START-ROOMS-LIST" + "\n")
                 for room in rooms:
                     file.write("START-NEW-ROOM" + "\n")
-                    file.write(str(room) + "\n")
+                    print("writing start new room")
                     file.write(str(room.desc) + "\n")
                     file.write(str(room.monsters) + "\n")
                     file.write(str(room.exits) + "\n")

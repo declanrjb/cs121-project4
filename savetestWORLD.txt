@@ -1,74 +1,64 @@
-[<room.Room object at 0x1031c4d90>, <room.Room object at 0x10322bb80>, <room.Room object at 0x10322bc70>, <room.Room object at 0x10322bbe0>, <room.Room object at 0x10322bbb0>, <room.Room object at 0x10322b8e0>, <room.Room object at 0x10322b880>, <room.Room object at 0x10322b850>, <room.Room object at 0x10322b820>]
 START-ROOMS-LIST
 START-NEW-ROOM
-<room.Room object at 0x1031c4d90>
 You are now in the center of the brain.
-[]
-[['north', <room.Room object at 0x10322bb80>], ['east', <room.Room object at 0x10322b880>], ['south', <room.Room object at 0x10322b850>], ['west', <room.Room object at 0x10322b8e0>]]
-[<item.Item object at 0x10322b7f0>]
+no-monsters
+[['north', <room.Room object at 0x10051e4a0>], ['east', <room.Room object at 0x10051e1a0>], ['south', <room.Room object at 0x10051e170>], ['west', <room.Room object at 0x10051e1d0>]]
+[<item.Item object at 0x10051dff0>]
 center_brain
 False
 START-NEW-ROOM
-<room.Room object at 0x10322bb80>
 You are now in the chamber of useful programming knowledge, a hallowed space filled mostly with CSC1 121 lecture notes.
-[]
-[['south', <room.Room object at 0x1031c4d90>], ['east', <room.Room object at 0x10322bc70>], ['west', <room.Room object at 0x10322bbe0>]]
-[<item.Thought object at 0x10322b790>]
+no-monsters
+[['south', <room.Room object at 0x1004a4d90>], ['east', <room.Room object at 0x10051e470>], ['west', <room.Room object at 0x10051e410>]]
+[<item.Thought object at 0x10051dd20>]
 useful_programming
 False
 START-NEW-ROOM
-<room.Room object at 0x10322bc70>
 You are now in the room of lazy hacks. Every surface, from floor to walls to ceiling, is a chalkboard - but most of the notes you've taken there are covered up by the shelves of Stack Overflow comments.
-[]
-[['west', <room.Room object at 0x10322bb80>]]
+no-monsters
+[['west', <room.Room object at 0x10051e4a0>]]
 []
 lazy_hacks
 False
 START-NEW-ROOM
-<room.Room object at 0x10322bbe0>
 You have entered the sanctum of programmer humor, a place of many memes stolen from many subreddits.
-[]
-[['east', <room.Room object at 0x10322bb80>], ['west', <room.Room object at 0x10322bbb0>], ['south', <room.Room object at 0x10322b8e0>]]
+no-monsters
+[['east', <room.Room object at 0x10051e4a0>], ['west', <room.Room object at 0x10051e200>], ['south', <room.Room object at 0x10051e1d0>]]
 []
 programmer_humor
 False
 START-NEW-ROOM
-<room.Room object at 0x10322bbb0>
 You are now in the room of bad jokes. And I mean *really* bad jokes. Abandon hope, all ye who enter here.
-[]
-[['east', <room.Room object at 0x10322bbe0>]]
+no-monsters
+[['east', <room.Room object at 0x10051e410>]]
 []
 bad_jokes
 False
 START-NEW-ROOM
-<room.Room object at 0x10322b8e0>
 You are now in the vault of out of place sci-fi references, a room strangely larger than any other in this brain.
-[]
-[['east', <room.Room object at 0x1031c4d90>], ['north', <room.Room object at 0x10322bbe0>]]
+no-monsters
+[['east', <room.Room object at 0x1004a4d90>], ['north', <room.Room object at 0x10051e410>]]
 []
 sci_fi
 False
 START-NEW-ROOM
-<room.Room object at 0x10322b880>
 You are now in the room of productive academic thought. Sadly, there's quite a lot of dust here.
-[]
-[['west', <room.Room object at 0x1031c4d90>]]
+no-monsters
+[['west', <room.Room object at 0x1004a4d90>]]
 []
 productive_thought
 False
 START-NEW-ROOM
-<room.Room object at 0x10322b850>
 You are now in the room of distractions - Hey, did you know the new NK Jemisin book just came out?
-[]
-[['north', <room.Room object at 0x1031c4d90>], ['south', <room.Room object at 0x10322b820>]]
+no-monsters
+[['north', <room.Room object at 0x1004a4d90>], ['south', <room.Room object at 0x10051e020>]]
 []
 distractions
 False
 START-NEW-ROOM
-<room.Room object at 0x10322b820>
 Listen, it's not your fault you've entered the room of excuses. Somebody else made you do it.
-[<monster.Assignment object at 0x10322b760>]
-[['north', <room.Room object at 0x10322b850>]]
+savetestMONSTER_Bob the monster.txt
+[['north', <room.Room object at 0x10051e170>]]
 []
 excuses
 False

@@ -199,6 +199,26 @@ while playing and player.alive:
         elif commandWords[0].lower() == "me":
             player.me()
         elif commandWords[0].lower() == "save":
+
+            def save_monster(savename,monster):
+                filename = savename + "MONSTER" + "_" + monster.name + ".txt"
+                file = open(filename, "w")
+                file.write(str(monster.name) + "\n")
+                file.write(str(monster.health) + "\n")
+                file.write(str(monster.room.name) + "\n")
+                file.close()
+                return filename
+
+            def save_item(savename,item):
+                filename = savename + "ITEM" + "_" + item.name + ".txt"
+                file = open(filename, "w")
+                file.write(str(item.name) + "\n")
+                file.write(str(item.desc) + "\n")
+                file.write(str(item.loc.name) + "\n")
+                file.write(str(item.weight) + "\n")
+                file.close()
+                return filename
+
             def save_player(savename):
                 filename = savename + "PLAYER" + ".txt"
                 file = open(filename, "w")
@@ -217,9 +237,18 @@ while playing and player.alive:
                     file.write("START-NEW-ROOM" + "\n")
                     print("writing start new room")
                     file.write(str(room.desc) + "\n")
-                    file.write(str(room.monsters) + "\n")
+
+                    if len(room.monsters) > 0:
+                        for monster in room.monsters:
+                            file.write(str(save_monster(savename,monster)) + "\n")
+                    else:
+                        file.write("no-monsters" + "\n")
+
+                    
                     file.write(str(room.exits) + "\n")
-                    file.write(str(room.items) + "\n")
+
+                    if len(room.items) > 0:
+                        file.write(str(save_item(savename,item)) + "\n")
                     file.write(str(room.name) + "\n")
                     file.write(str(room.playerHere) + "\n")
                 file.close()

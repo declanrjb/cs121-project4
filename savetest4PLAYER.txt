@@ -1,5 +1,0 @@
-useful_programming
-{<item.Thought object at 0x100a4f910>: 1}
-50
-True
-49

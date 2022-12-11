@@ -1,0 +1,4 @@
+Thought1
+This is just a thought.
+player
+0

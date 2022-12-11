@@ -96,10 +96,13 @@ def checkVictory(rooms):
     return victory
 
 def findRoomByName(name,roomList):
-    foundRoom = None
-    for room in roomList:
-        if room.name == name:
-            foundRoom = room
+    if name == "player":
+        foundRoom = player
+    else:
+        foundRoom = None
+        for room in roomList:
+            if room.name == name:
+                foundRoom = room
     return foundRoom
 
 
@@ -109,6 +112,28 @@ def findRoomByName(name,roomList):
 loading = input("Would you like to load a previous game? ")
 if loading == "yes":
     filecore = input("What save file would you like to load from? ")
+
+    def load_item(filename,rooms):
+        itemFile = open(filename, "r")
+        itemName = itemFile.readline().replace("\n","")
+        itemDesc = itemFile.readline().replace("\n","")
+        itemRoomName = itemFile.readline().replace("\n","")
+        itemWeight = int(itemFile.readline().replace("\n",""))
+        itemLoc = findRoomByName(itemRoomName,rooms)
+        currItem = Item(itemName,itemDesc,itemWeight)
+        if itemLoc != player:
+            currItem.putInRoom(itemLoc)
+        else:
+            player.pickup(currItem)
+
+    def load_monster(filename,rooms):
+        monsterFile = open(filename, "r")
+        monstName = monsterFile.readline().replace("\n","")
+        monstHealth = int(monsterFile.readline().replace("\n",""))
+        monsterRoomName = monsterFile.readline().replace("\n","")
+        monsterRoom = findRoomByName(monsterRoomName,rooms)
+        currMonster = Monster(monstName,monstHealth,monsterRoom)
+        monsterRoom.addMonster(currMonster)
 
     def load_world(savename):
         roomsName = savename + "_ROOMS.txt"
@@ -131,23 +156,10 @@ if loading == "yes":
                 currRoom = findRoomByName(currRoomName,rooms)
 
             elif "MONSTER.txt" in line:
-                monsterFile = open(line, "r")
-                monstName = monsterFile.readline().replace("\n","")
-                monstHealth = int(monsterFile.readline().replace("\n",""))
-                monsterRoomName = monsterFile.readline().replace("\n","")
-                monsterRoom = findRoomByName(monsterRoomName,rooms)
-                currMonster = Monster(monstName,monstHealth,monsterRoom)
-                monsterRoom.addMonster(currMonster)
+                load_monster(line,rooms)
 
             elif "ITEM.txt" in line:
-                itemFile = open(line, "r")
-                itemName = itemFile.readline().replace("\n","")
-                itemDesc = itemFile.readline().replace("\n","")
-                itemRoomName = itemFile.readline().replace("\n","")
-                itemWeight = int(itemFile.readline().replace("\n",""))
-                itemLoc = findRoomByName(itemRoomName,rooms)
-                currItem = Item(itemName,itemDesc,itemLoc)
-                itemLoc.addItem(currItem)
+                load_item(line,rooms)
 
             elif line == "START-EXITS":
                 line = file.readline().replace("\n","")
@@ -164,12 +176,26 @@ if loading == "yes":
             line = file.readline().replace("\n","")
 
         return rooms
+
+    def load_player(filename,rooms):
+        file = open(filename, "r")
+        location_name = file.readline().replace("\n","")
+        for room in rooms:
+            if room.name == location_name:
+                player.location = room
+        itemLine = file.readline().replace("\n","")
+        if "ITEM.txt" in itemLine:
+            load_item(itemLine,rooms)
+        player.health = int(file.readline().replace("\n",""))
+        player.alive = bool(file.readline().replace("\n",""))
+        player.headspace = int(file.readline().replace("\n",""))
+        player.name = file.readline().replace("\n","")
     
     worldfile = filecore
     rooms = load_world(worldfile)
 
     playerfile = filecore + "_PLAYER.txt"
-    player.load(playerfile,rooms)
+    load_player(playerfile,rooms)
 
     print()
     print("Game loaded succesfully.")

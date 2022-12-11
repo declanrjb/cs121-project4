@@ -34,18 +34,6 @@ class Player:
             self.items.pop(item)
             item.loc = self.location
             self.location.addItem(item)
-    def load(self,filename,rooms):
-        file = open(filename, "r")
-        location_name = file.readline().replace("\n","")
-        print(location_name)
-        for room in rooms:
-            print(room)
-            if room.name == location_name:
-                self.location = room
-        self.items = file.readline().replace("\n","")
-        self.health = file.readline().replace("\n","")
-        self.alive = file.readline().replace("\n","")
-        self.headspace = file.readline().replace("\n","")
     def inventory(self):
         clear()
         print("I'm thinking about:")

@@ -1,5 +1,6 @@
 useful_programming
-{<item.Thought object at 0x102517ee0>: 1}
+savetest_Thought1_ITEM.txt
 50
 True
 49
+player

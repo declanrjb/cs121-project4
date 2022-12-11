@@ -23,7 +23,11 @@ class Room:
     def addItem(self, item):
         self.items.append(item)
     def removeItem(self, item):
-        self.items.remove(item)
+        if item in self.items:
+            self.items.remove(item)
+            return True
+        else:
+            return False
     def addMonster(self, monster):
         self.monsters.append(monster)
     def removeMonster(self, monster):

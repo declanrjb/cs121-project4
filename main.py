@@ -295,7 +295,7 @@ while playing and player.alive:
                     for k in player.items:
                         file.write(save_item(savename,k) + "\n")
                 else:
-                    file.write("no-items")
+                    file.write("no-items" + "\n")
                 file.write(str(player.health) + "\n")
                 file.write(str(player.alive) + "\n")
                 file.write(str(player.headspace) + "\n")

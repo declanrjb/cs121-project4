@@ -1,0 +1,6 @@
+useful_programming
+savetest_Thought1_ITEM.txt
+50
+True
+49
+player

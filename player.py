@@ -8,8 +8,11 @@ class Player:
         self.location = None
         self.items = {}
         self.health = 50
+        self.health_max = self.health
         self.alive = True
         self.headspace = 50
+        self.headspace_max = self.headspace
+        self.name = "player"
     def goDirection(self, direction):
         self.location.playerHere = False
         self.location = self.location.getDestination(direction)
@@ -31,15 +34,8 @@ class Player:
         #Remove all copies of the item
         while item in self.items.keys():
             self.items.pop(item)
-            item.loc = self
+            item.loc = self.location
             self.location.addItem(item)
-    def load(self, filename):
-        file = open(filename, "r")
-        self.location = file.readline()
-        self.items = file.readline()
-        self.health = file.readline()
-        self.alive = file.readline()
-        self.headspace = file.readline()
     def inventory(self):
         clear()
         print("I'm thinking about:")
@@ -92,4 +88,11 @@ class Player:
             self.alive = False
         print()
         input("Press enter to continue...")
+
+    def update(self):
+        #Regeneration
+        if self.health < self.health_max:
+            self.health += 1
+        if self.headspace < self.headspace_max:
+            self.headspace += 1
 

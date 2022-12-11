@@ -1,5 +1,0 @@
-<room.Room object at 0x1031c4d90>
-{}
-50
-True
-50

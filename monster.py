@@ -32,6 +32,10 @@ class Assignment(Monster):
         super().__init__(name, health, room)
         self.damage = damage
         self.speed = speed
+
+    def path_to_player(self,player):
+        path = []
+        
     def update(self):
         if random.random() < self.speed:
             if self.findPlayer() in self.room.exits:

@@ -1,4 +1,4 @@
-Total Points: 20
+Total Points: 30
 
 (x) “me” command (2 points): Create a command that lets the player see their current status, including their health and/or whatever other attributes you’ve added.
 
@@ -64,7 +64,7 @@ Total Points: 20
 
 ( ) map (3 to 6 points): Allow the player to gain the ability to inspect a map of the world. Or give them the ability to look at a map from the start, but make it so that the contents of the map are slowly revealed (say, as rooms are explored). The map can just be “ASCII art,” a printed display. This is worth more points if you have a larger/complex world, or display some interesting things in each location, or limit the map in some way.
 
-( ) saving the game (10 points) : Let a player choose to save their game to come back to later. This should create a file in the folder where the program is stored (or maybe in a “saved” subfolder of that folder) with a name specified by the user. On starting the program, the user should have the option to continue from the point at which they saved, instead of creating a new game.
+(x) saving the game (10 points) : Let a player choose to save their game to come back to later. This should create a file in the folder where the program is stored (or maybe in a “saved” subfolder of that folder) with a name specified by the user. On starting the program, the user should have the option to continue from the point at which they saved, instead of creating a new game.
 
 ( ) graphical interface (10 points): Typing is annoying. Make the program work through a graphical interface instead of typed commands. You don’t have to create pictures that actually look like the world. You can have a window, with portions dedicated to displaying the description of the current room, what monsters, are there, what items are there, etc. Within this interface, actions should be made by clicking buttons with the mouse or by hitting single keys as controls, rather than just through typing commands. Common options here are the curses library or the “Tk interactive” library tkinter.
 

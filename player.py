@@ -8,8 +8,10 @@ class Player:
         self.location = None
         self.items = {}
         self.health = 50
+        self.health_max = self.health
         self.alive = True
         self.headspace = 50
+        self.headspace_max = self.headspace
         self.name = "player"
     def goDirection(self, direction):
         self.location.playerHere = False
@@ -86,4 +88,11 @@ class Player:
             self.alive = False
         print()
         input("Press enter to continue...")
+
+    def update(self):
+        #Regeneration
+        if self.health < self.health_max:
+            self.health += 1
+        if self.headspace < self.headspace_max:
+            self.headspace += 1
 

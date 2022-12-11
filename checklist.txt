@@ -1,4 +1,4 @@
-Total Points: 30
+Total Points: 32
 
 (x) “me” command (2 points): Create a command that lets the player see their current status, including their health and/or whatever other attributes you’ve added.
 
@@ -22,7 +22,7 @@ Total Points: 30
 
 (x) “wait” command (2 points): In the game as it is, time passes only when you move to a new room. Make it so that you can type a command that just lets time pass. Or implement a trickier version: let the user type a number so they can wait for a number of turns with only one command entry.
 
-( ) regeneration (2 points): Have the player regenerate in some way over time. The easiest thing is to make health increase a little each turn, but there are other things you could do as well.
+(x) regeneration (2 points): Have the player regenerate in some way over time. The easiest thing is to make health increase a little each turn, but there are other things you could do as well.
 
 ( ) locked chests (3 points): Create “chests” or other containers that cannot be opened without a key, and also the relevant keys.
 

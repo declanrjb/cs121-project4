@@ -38,7 +38,6 @@ def createWorld():
 
     #Build distractions connections
     Room.connectRooms(distractions,"south",excuses,"north")
-    Room.connectRooms(distractions,"north",center_brain,"south")
 
     i = Item("Rock", "This is just a rock.", 1)
     thought1 = Thought("Thought1",0)

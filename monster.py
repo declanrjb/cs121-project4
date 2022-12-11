@@ -32,6 +32,7 @@ class Assignment(Monster):
         super().__init__(name, health, room)
         self.damage = damage
         self.speed = speed
+        self.cooldown = 0
 
     def path_to_player(self,currRoom):
         if currRoom.playerHere or len(currRoom.exits) == 0:
@@ -51,6 +52,7 @@ class Assignment(Monster):
             priorPath = self.path_to_player(nextRoom)
             return priorPath + [currRoom.name]
 
+    #Basic pathfinding
     def player_path(self,currRoom):
         i = 0
         path = []
@@ -61,17 +63,16 @@ class Assignment(Monster):
             while (targetExit in path) and (j < numExits):
                 targetExit = currRoom.exits[j][1]
                 j += 1
-            print(targetExit.name)
             currRoom = targetExit
             path.append(currRoom)
             i += 1
         return path
         
     def update(self):
-        if random.random() < self.speed:
-            path = self.path_to_player(self.room)
+        if (random.randint(0,4) < 2) and (self.room.playerHere != True):
+            path = self.player_path(self.room)
             print(path)
-            #self.moveTo(path[1])
+            self.moveTo(path[0])
 
 class Leisure(Monster):
     def __init__self(self, name, health, room, cost, buff):

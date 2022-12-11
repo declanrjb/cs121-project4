@@ -1,4 +1,4 @@
-Total Points: 32
+Total Points: 35
 
 (x) “me” command (2 points): Create a command that lets the player see their current status, including their health and/or whatever other attributes you’ve added.
 
@@ -32,7 +32,7 @@ Total Points: 32
 
 (x) victory condition (3 points): Create a way for the player to win the game.
 
-( ) random world (3 points): Make the world be generated in a random way when the program is run so that it’s somewhat different each time the game is played.
+(x) random world (3 points): Make the world be generated in a random way when the program is run so that it’s somewhat different each time the game is played.
 
 ( ) loot (3 points): Make it so that defeating some monsters causes useful items to appear. There should be some amount of randomness about what those items are.
 

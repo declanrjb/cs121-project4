@@ -10,6 +10,7 @@ class Player:
         self.health = 50
         self.alive = True
         self.headspace = 50
+        self.name = "player"
     def goDirection(self, direction):
         self.location.playerHere = False
         self.location = self.location.getDestination(direction)
@@ -31,7 +32,7 @@ class Player:
         #Remove all copies of the item
         while item in self.items.keys():
             self.items.pop(item)
-            item.loc = self
+            item.loc = self.location
             self.location.addItem(item)
     def load(self,filename,rooms):
         file = open(filename, "r")

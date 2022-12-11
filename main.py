@@ -95,41 +95,80 @@ def checkVictory(rooms):
                     victory = False
     return victory
 
+def findRoomByName(name,roomList):
+    foundRoom = None
+    for room in roomList:
+        if room.name == name:
+            foundRoom = room
+    return foundRoom
+
+
+
 
 
 loading = input("Would you like to load a previous game? ")
 if loading == "yes":
     filecore = input("What save file would you like to load from? ")
 
-    def load_world(filename):
-        file = open(filename, "r")
+    def load_world(savename):
+        roomsName = savename + "_ROOMS.txt"
+        filename = savename + "_WORLD.txt"
+
+        file = open(roomsName, "r")
         rooms = []
         line = file.readline().replace("\n","")
-        line = line.replace("\n","")
+        while line != "":
+            currRoom = Room("","")
+            currRoom.name = str(line)
+            rooms.append(currRoom)
+            line = file.readline().replace("\n","")
+
+        file = open(filename, "r")
+        line = file.readline().replace("\n","")
         while line != "":
             if line == "START-NEW-ROOM":
-                print("*room found*")
-                currRoom = Room("","")
-                currRoom.desc = str(file.readline().replace("\n",""))
-                monsters = (file.readline().replace("\n",""))
-                monsters = monsters.strip('][').split(', ')
-                print(monsters)
-                for monstPointer in monsters:
-                    monstPointer = monstPointer.strip('][')
-                    print(monstPointer)
-                    if len(monstPointer) > 1:
-                        currRoom.monsters.append(ctypes.cast(monstPointer,ctypes.py_object).value)
-                currRoom.exits = list(file.readline().replace("\n",""))
-                currRoom.items = list(file.readline().replace("\n",""))
-                currRoom.name = str(file.readline().replace("\n",""))
+                currRoomName = file.readline().replace("\n","")
+                currRoom = findRoomByName(currRoomName,rooms)
+
+            elif "MONSTER.txt" in line:
+                monsterFile = open(line, "r")
+                currMonster = Monster("","","")
+                currMonster.name = monsterFile.readline().replace("\n","")
+                currMonster.health = int(monsterFile.readline().replace("\n",""))
+                monsterRoomName = monsterFile.readline().replace("\n","")
+                monsterRoom = findRoomByName(monsterRoomName,rooms)
+                if monsterRoom != None:
+                    currMonster.room = monsterRoom
+                    monsterRoom.addMonster(currMonster)
+
+            elif "ITEM.txt" in line:
+                itemFile = open(line, "r")
+                currItem = Item("","","")
+                currItem.name = itemFile.readline().replace("\n","")
+                currItem.desc = itemFile.readline().replace("\n","")
+                itemRoomName = itemFile.readline().replace("\n","")
+                itemRoom = findRoomByName(itemRoomName,rooms)
+                if itemRoom != None:
+                    currItem.loc = itemRoom
+                    itemRoom.addItem(currItem)
+
+            elif line == "START-EXITS":
+                line = file.readline().replace("\n","")
+                while line != "END-EXITS":
+                    exitList = line.split(",")
+                    print(exitList)
+                    currRoom.addExit(exitList[0],exitList[1])
+                    line = file.readline().replace("\n","")
+
+            elif line == "START-FINAL-ATTRIBUTES":
+                currRoom.desc = file.readline().replace("\n","")
                 currRoom.playerHere = bool(file.readline().replace("\n",""))
-                print(currRoom.monsters)
-                rooms.append(currRoom)
+
             line = file.readline().replace("\n","")
-            line = line.replace("\n","")
+
         return rooms
     
-    worldfile = filecore + "WORLD.txt"
+    worldfile = filecore
     rooms = load_world(worldfile)
 
     playerfile = filecore + "PLAYER.txt"
@@ -201,7 +240,7 @@ while playing and player.alive:
         elif commandWords[0].lower() == "save":
 
             def save_monster(savename,monster):
-                filename = savename + "MONSTER" + "_" + monster.name + ".txt"
+                filename = savename + "_" + monster.name + "_" + "MONSTER" + ".txt"
                 file = open(filename, "w")
                 file.write(str(monster.name) + "\n")
                 file.write(str(monster.health) + "\n")
@@ -210,7 +249,7 @@ while playing and player.alive:
                 return filename
 
             def save_item(savename,item):
-                filename = savename + "ITEM" + "_" + item.name + ".txt"
+                filename = savename + "_" + item.name + "_" + "ITEM" + ".txt"
                 file = open(filename, "w")
                 file.write(str(item.name) + "\n")
                 file.write(str(item.desc) + "\n")
@@ -220,7 +259,7 @@ while playing and player.alive:
                 return filename
 
             def save_player(savename):
-                filename = savename + "PLAYER" + ".txt"
+                filename = savename + "_" + "PLAYER" + ".txt"
                 file = open(filename, "w")
                 file.write(str(player.location.name) + "\n")
                 file.write(str(player.items) + "\n")
@@ -230,27 +269,40 @@ while playing and player.alive:
                 file.close()
             
             def save_world(savename):
-                filename = savename + "WORLD" + ".txt"
+                filename = savename + "_" + "WORLD" + ".txt"
                 file = open(filename, "w")
                 file.write("START-ROOMS-LIST" + "\n")
                 for room in rooms:
                     file.write("START-NEW-ROOM" + "\n")
+                    file.write(str(room.name) + "\n")
                     print("writing start new room")
-                    file.write(str(room.desc) + "\n")
 
                     if len(room.monsters) > 0:
                         for monster in room.monsters:
                             file.write(str(save_monster(savename,monster)) + "\n")
                     else:
                         file.write("no-monsters" + "\n")
-
                     
-                    file.write(str(room.exits) + "\n")
+                    file.write("START-EXITS" + "\n")
+                    for baseExit in room.exits:
+                        file.write(str(baseExit[0]) + "," + str(baseExit[1].name) + "\n")
+                    file.write("END-EXITS" + "\n")
 
                     if len(room.items) > 0:
-                        file.write(str(save_item(savename,item)) + "\n")
-                    file.write(str(room.name) + "\n")
+                        for item in room.items:
+                            file.write(str(save_item(savename,item)) + "\n")
+                    else:
+                        file.write("no-items" + "\n")
+
+                    file.write("START-FINAL-ATTRIBUTES" + "\n")
+                    file.write(str(room.desc) + "\n")
                     file.write(str(room.playerHere) + "\n")
+                file.close()
+
+                roomFileName = savename + "_" + "ROOMS" + ".txt"
+                file = open(roomFileName, "w")
+                for room in rooms:
+                    file.write(str(room.name) + "\n")
                 file.close()
             
             savename = input("Saving game. Enter a file name: ")

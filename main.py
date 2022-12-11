@@ -38,13 +38,17 @@ def createWorld():
 
     #Build distractions connections
     Room.connectRooms(distractions,"south",excuses,"north")
+    Room.connectRooms(distractions,"north",center_brain,"south")
 
     i = Item("Rock", "This is just a rock.", 1)
     thought1 = Thought("Thought1",0)
     i.putInRoom(center_brain)
     thought1.putInRoom(useful_programming)
     player.location = center_brain
-    Assignment("Bob the monster", 20, excuses, 7, 1)
+    center_brain.playerHere = True
+    Bob = Assignment("Bob the monster", 20, excuses, 7, 1)
+    print(Bob.player_path(Bob.room))
+    input("Press enter to continue...")
 
     return rooms
 

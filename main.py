@@ -5,10 +5,11 @@ from monster import *
 import os
 import updater
 import ctypes
+from worldGenerator import createWorld
 
 player = Player()
 
-def createWorld():
+'''def createWorld():
     #Build rooms
     center_brain = Room("center_brain","You are now in the center of the brain.")
     useful_programming = Room("useful_programming","You are now in the chamber of useful programming knowledge, a hallowed space filled mostly with CSC1 121 lecture notes.")
@@ -49,7 +50,7 @@ def createWorld():
     print(Bob.player_path(Bob.room))
     input("Press enter to continue...")
 
-    return rooms
+    return rooms'''
 
 def clear():
     os.system('cls' if os.name == 'nt' else 'clear')
@@ -205,6 +206,8 @@ if loading == "yes":
     input("Press enter to continue...")
 else:
     rooms = createWorld()
+    player.location = rooms[0]
+    rooms[0].playerHere = True
 playing = True
 possibleCommands = ["go","pickup","inventory","help","exit","attack","me","inspect","drop","wait"]
 while playing and player.alive:

@@ -2,7 +2,7 @@ from room import *
 import random
 def createWorld():
 
-    #Helper list and function for directional operations
+    #Helper list and function for directional operations.
     directions = ["North", "South", "East", "West", "Up", "Down"]
     def oppositeDirection(direction):
         for i in range(6):
@@ -11,6 +11,7 @@ def createWorld():
                     return directions[i+1]
                 return directions[i-1]
 
+    #Core function that builds a random network of rooms, branching out from a given starting room.
     def buildRandomRooms(parentRoom, parentDirection, depth, usedNames):
         roomNamePrefixes = ["a", "b", "c", "d", "e", "f"]
         roomNames = ["a", "b", "c", "d", "e", "f"]
@@ -26,23 +27,25 @@ def createWorld():
             for direction in directions:
                 if direction != parentDirection and random.random() < depth/18:
                     buildRandomRooms(parentRoom.exits[len(parentRoom.exits)-1][1], direction, depth-1, usedNames)
-        print(name+str(len(usedNames)-1)+parentRoom.name)
 
+    #Helper function that finds a random room with open directions and lists those directions.
     def findOpenDirectionsOfRandomRoom():
         randomRoom = cPU
         while len(randomRoom.exits)>5:
             randomRoom = random.choice(world)
         openDirections = directions + []
         for exits in randomRoom.exits:
-            openDirections.remove(exits[0])
-        print([openDirections, randomRoom])
+            if exits[0] in openDirections:
+                openDirections.remove(exits[0])
         return [openDirections, randomRoom]
 
+    #Helper function that connects in a given room to a random place.
     def connectToRandomRoom(room):
         randomRoom = findOpenDirectionsOfRandomRoom()
         direction = random.choice(randomRoom[0])
         Room.connectRooms(room, oppositeDirection(direction), randomRoom[1], direction)
 
+    #Helper function that randomly connects two rooms to each other.
     def constructNonEuclidianPassages(n):
         for passages in range(n):
             connectionFound = False
@@ -74,10 +77,15 @@ def createWorld():
     for direction in directions:
         buildRandomRooms(cPU, direction, 6, usedNames)
 
+    #Connect in the key rooms.
     connectToRandomRoom(puzzle1)
     connectToRandomRoom(puzzle2)
     connectToRandomRoom(puzzle3)
     connectToRandomRoom(puzzle4)
     connectToRandomRoom(puzzle5)
     connectToRandomRoom(puzzle6)
+
+    #Add some random shortcuts.
     constructNonEuclidianPassages(random.randint(6,13))
+
+    return world

@@ -1,9 +1,10 @@
 from room import *
 import random
+from monster import *
 def createWorld():
 
     #Helper list and function for directional operations.
-    directions = ["North", "South", "East", "West", "Up", "Down"]
+    directions = ["north", "south", "east", "west", "up", "down"]
     def oppositeDirection(direction):
         for i in range(6):
             if directions[i] == direction:
@@ -62,6 +63,26 @@ def createWorld():
             direction = random.choice(openDirections)
             Room.connectRooms(randomRoom1[1], direction, randomRoom2[1], oppositeDirection(direction))
 
+    #Helper function that populates an arbitrary number of monsters into the world
+    def populateMonsters(numAssignments,numLeisures,world):
+        monsterNames = ["HUM 110 Paper 1",
+        "HUM 110 Paper 2",
+        "HUM 110 Paper 3",
+        "HUM 110 Paper 4",
+        "CS Midterm",
+        "The Dread Lord Math 112",
+        "CS Lab Assignment",
+        "HUM 110 Reading"]
+        for n in range(numAssignments):
+            #Selects a unique name from the list while scrolling through the range. Currently supports only up to eight assignments.
+            name = monsterNames[n]
+            health = random.randint(10,50)
+            place = random.randint(0,(len(world)-1))
+            monstRoom = world[place]
+            damage = random.randint(1,10)
+            speed = random.randint(1,3)
+            Assignment(name,health,monstRoom,damage,speed)
+
     #Build the key rooms. 
     cPU = Room("CPU Pun Here", "Enthralling Description Here")
     center_brain = Room("center_brain","You are now in the center of the brain.")
@@ -87,5 +108,6 @@ def createWorld():
 
     #Add some random shortcuts.
     constructNonEuclidianPassages(random.randint(6,13))
+    populateMonsters(8,0,world)
 
     return world

@@ -208,6 +208,9 @@ else:
     rooms = createWorld()
     player.location = rooms[0]
     rooms[0].playerHere = True
+
+    print(len(rooms))
+    input("press enter to continue")
 playing = True
 possibleCommands = ["go","pickup","inventory","help","exit","attack","me","inspect","drop","wait"]
 while playing and player.alive:

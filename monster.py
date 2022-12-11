@@ -72,7 +72,12 @@ class Assignment(Monster):
         if (random.randint(0,4) < 2) and (self.room.playerHere != True):
             path = self.player_path(self.room)
             print(path)
-            self.moveTo(path[0])
+            #If there's more path than speed, move along the path up to my speed. Else, immediately move to 
+            # the end of the path, without overshooting it.
+            if self.speed <= len(path):
+                self.moveTo(path[(self.speed - 1)])
+            else:
+                self.moveTo(path[(len(path) - 1)])
 
 class Leisure(Monster):
     def __init__self(self, name, health, room, cost, buff):

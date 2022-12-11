@@ -132,25 +132,22 @@ if loading == "yes":
 
             elif "MONSTER.txt" in line:
                 monsterFile = open(line, "r")
-                currMonster = Monster("","","")
-                currMonster.name = monsterFile.readline().replace("\n","")
-                currMonster.health = int(monsterFile.readline().replace("\n",""))
+                monstName = monsterFile.readline().replace("\n","")
+                monstHealth = int(monsterFile.readline().replace("\n",""))
                 monsterRoomName = monsterFile.readline().replace("\n","")
                 monsterRoom = findRoomByName(monsterRoomName,rooms)
-                if monsterRoom != None:
-                    currMonster.room = monsterRoom
-                    monsterRoom.addMonster(currMonster)
+                currMonster = Monster(monstName,monstHealth,monsterRoom)
+                monsterRoom.addMonster(currMonster)
 
             elif "ITEM.txt" in line:
                 itemFile = open(line, "r")
-                currItem = Item("","","")
-                currItem.name = itemFile.readline().replace("\n","")
-                currItem.desc = itemFile.readline().replace("\n","")
+                itemName = itemFile.readline().replace("\n","")
+                itemDesc = itemFile.readline().replace("\n","")
                 itemRoomName = itemFile.readline().replace("\n","")
-                itemRoom = findRoomByName(itemRoomName,rooms)
-                if itemRoom != None:
-                    currItem.loc = itemRoom
-                    itemRoom.addItem(currItem)
+                itemWeight = int(itemFile.readline().replace("\n",""))
+                itemLoc = findRoomByName(itemRoomName,rooms)
+                currItem = Item(itemName,itemDesc,itemLoc)
+                itemLoc.addItem(currItem)
 
             elif line == "START-EXITS":
                 line = file.readline().replace("\n","")
@@ -171,7 +168,7 @@ if loading == "yes":
     worldfile = filecore
     rooms = load_world(worldfile)
 
-    playerfile = filecore + "PLAYER.txt"
+    playerfile = filecore + "_PLAYER.txt"
     player.load(playerfile,rooms)
 
     print()
@@ -262,10 +259,15 @@ while playing and player.alive:
                 filename = savename + "_" + "PLAYER" + ".txt"
                 file = open(filename, "w")
                 file.write(str(player.location.name) + "\n")
-                file.write(str(player.items) + "\n")
+                if len(player.items) > 0:
+                    for k in player.items:
+                        file.write(save_item(savename,k) + "\n")
+                else:
+                    file.write("no-items")
                 file.write(str(player.health) + "\n")
                 file.write(str(player.alive) + "\n")
                 file.write(str(player.headspace) + "\n")
+                file.write(str(player.name) + "\n")
                 file.close()
             
             def save_world(savename):

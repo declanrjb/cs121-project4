@@ -111,20 +111,26 @@ class Player:
         print()
         print("I have " + str(self.timeLeft) + " time left.")
         input("Press enter to continue...")
-    def attackMonster(self, mon):
+    def engageActivity(self, mon):
         clear()
-        print("You are attacking " + mon.name)
-        print()
-        print("Your health is " + str(self.health) + ".")
-        print(mon.name + "'s health is " + str(mon.health) + ".")
-        print()
-        if self.health > mon.health:
-            self.health -= mon.health
-            print("You win. Your health is now " + str(self.health) + ".")
-            mon.die()
+        if mon.monsterType == "Leisure":
+            print("You take " + str(mon.cost) + " time to " + mon.name + " and feel a bit better!")
+            self.timeLeft -= mon.cost
+            self.me()
         else:
-            print("You lose.")
-            self.alive = False
+            print("You decide to tackle " + mon.name + ".")
+            print()
+            if mon.monsterType == "Essay":
+                self.time -= mon.health
+                print("You spend " + str(mon.health) + " time working on " + mon.name +".")
+            if mon.monsterType == "Test":
+                self.health -= mon.health
+                print("You take " + mon.name + ", it's stressful.")
+            if random.random() > mon.health/self.health:
+                print("You've successfully completed " + mon.name + "!")
+                mon.die()
+            else:
+                print("Not done yet...")
         print()
         input("Press enter to continue...")
 

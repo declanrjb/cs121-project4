@@ -1,4 +1,4 @@
-Total Points: 35
+Total Points: 38
 
 (x) “me” command (2 points): Create a command that lets the player see their current status, including their health and/or whatever other attributes you’ve added.
 
@@ -38,7 +38,7 @@ Total Points: 35
 
 ( ) events (3 points): Make it so that interesting things sometimes happen. Their ocurrence can be governed by a timer or they could happen just at random.
 
-( ) more monsters (3 points): Create several different types of monsters. They should not just have different names, but really be different in important ways.
+(x) more monsters (3 points): Create several different types of monsters. They should not just have different names, but really be different in important ways.
 
 ( ) special rooms (3 points): Make rooms that have some effect on the player or monsters when they are entered. Maybe there’s a hospital that heals you when you enter it? That sort of thing.
 

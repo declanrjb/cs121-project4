@@ -14,6 +14,7 @@ def createRandWorld():
 
     #Core function that builds a random network of rooms, branching out from a given starting room.
     def buildRandomRooms(parentRoom, parentDirection, depth, usedNames):
+        print("depth" + str(depth))
         roomNamePrefixes = ["", "Studious ", "Creepy ", "Austentatious ", "Sactified ", "Abundant ", "Swag "]
         roomNames = ["Hall of ", "Archipelago of ", "Place of ", "Escalator to ", "Sanctum of ", "Forest of "]
         roomNameSuffixes = ["Suffering", "Time", "Sanctuary", "Jellyfish", "Factoids", "Capitalism"]
@@ -21,12 +22,13 @@ def createRandWorld():
         name = None
         while name in usedNames:
             name = random.choice(roomNamePrefixes)+random.choice(roomNames)+random.choice(roomNameSuffixes)
-        Room.connectRooms(parentRoom, parentDirection, Room(name, random.choice(descriptions)), oppositeDirection(parentDirection))
+        currRoom = Room(name, random.choice(descriptions))
+        Room.connectRooms(parentRoom, parentDirection, currRoom, oppositeDirection(parentDirection))
         usedNames.append(name)
         world.append(parentRoom.exits[len(parentRoom.exits)-1][1])
-        if depth > 0:
-            for direction in directions:
-                if direction != parentDirection and random.random() < depth/18:
+        if depth > 0 and (findOpenDirectionsOfRoom(currRoom) != None):
+            for direction in findOpenDirectionsOfRoom(currRoom):
+                if direction != parentDirection:
                     buildRandomRooms(parentRoom.exits[len(parentRoom.exits)-1][1], direction, depth-1, usedNames)
 
     #Helper function that finds a random room with open directions and lists those directions.
@@ -44,12 +46,12 @@ def createRandWorld():
 
     #Find all the open directions of a given room and return a list of them
     def findOpenDirectionsOfRoom(room):
-        if len(room.exits) < 4:
+        if len(room.exits) < 3:
             openDirections = directions + []
             for exits in room.exits:
                 if exits[0] in openDirections:
                     openDirections.remove(exits[0])
-            numToReturn = 4 - len(room.exits)
+            numToReturn = 3 - len(room.exits)
             returnDirections = openDirections[0:(numToReturn)]
             print(room.name)
             print(returnDirections)
@@ -154,10 +156,10 @@ def createRandWorld():
     #Build random pathways off of the center_brain.
     usedNames = [None]
     for direction in findOpenDirectionsOfRoom(center_brain):
-        buildRandomRooms(center_brain, direction, 6, usedNames)
+        buildRandomRooms(center_brain, direction, 4, usedNames)
 
-    for keyRoom in keyRooms:
-        connectToRandomRoom(keyRoom)
+    #for keyRoom in keyRooms:
+        #connectToRandomRoom(keyRoom)
 
     #Add some random shortcuts.
     #constructNonEuclidianPassages(random.randint(6,13))

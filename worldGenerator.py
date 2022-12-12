@@ -1,9 +1,10 @@
 from room import *
 import random
-def createWorld():
+from monster import *
+def createRandWorld():
 
     #Helper list and function for directional operations.
-    directions = ["North", "South", "East", "West", "Up", "Down"]
+    directions = ["north", "south", "east", "west", "up", "down"]
     def oppositeDirection(direction):
         for i in range(6):
             if directions[i] == direction:
@@ -62,15 +63,39 @@ def createWorld():
             direction = random.choice(openDirections)
             Room.connectRooms(randomRoom1[1], direction, randomRoom2[1], oppositeDirection(direction))
 
+    #Helper function that populates an arbitrary number of monsters into the world
+    def populateMonsters(numAssignments,numLeisures,world):
+        monsterNames = ["HUM 110 Paper 1",
+        "HUM 110 Paper 2",
+        "HUM 110 Paper 3",
+        "HUM 110 Paper 4",
+        "CS Midterm",
+        "The Dread Lord Math 112",
+        "CS Lab Assignment",
+        "HUM 110 Reading"]
+        for n in range(numAssignments):
+            #Selects a unique name from the list while scrolling through the range. Currently supports only up to eight assignments.
+            name = monsterNames[n]
+            health = random.randint(10,50)
+            place = random.randint(0,(len(world)-1))
+            monstRoom = world[place]
+            damage = random.randint(1,10)
+            speed = random.randint(1,3)
+            Assignment(name,health,monstRoom,damage,speed)
+
     #Build the key rooms. 
     cPU = Room("CPU Pun Here", "Enthralling Description Here")
-    puzzle1 = Room("p1", "p1")
-    puzzle2 = Room("p2", "p2")
-    puzzle3 = Room("p3", "p3")
-    puzzle4 = Room("p4", "p4")
-    puzzle5 = Room("p5", "p5")
-    puzzle6 = Room("p6", "p6")
-    world = [cPU, puzzle1, puzzle2, puzzle3, puzzle4, puzzle5, puzzle6]
+    center_brain = Room("center_brain","You are now in the center of the brain.")
+    useful_programming = Room("useful_programming","You are now in the chamber of useful programming knowledge, a hallowed space filled mostly with CSC1 121 lecture notes.")
+    lazy_hacks = Room("lazy_hacks","You are now in the room of lazy hacks. Every surface, from floor to walls to ceiling, is a chalkboard - but most of the notes you've taken there are covered up by the shelves of Stack Overflow comments.")
+    programmer_humor = Room("programmer_humor","You have entered the sanctum of programmer humor, a place of many memes stolen from many subreddits.")
+    bad_jokes = Room("bad_jokes","You are now in the room of bad jokes. And I mean *really* bad jokes. Abandon hope, all ye who enter here.")
+    sci_fi = Room("sci_fi","You are now in the vault of out of place sci-fi references, a room strangely larger than any other in this brain.")
+    productive_thought = Room("productive_thought","You are now in the room of productive academic thought. Sadly, there's quite a lot of dust here.")
+    distractions = Room("distractions","You are now in the room of distractions - Hey, did you know the new NK Jemisin book just came out?")
+    excuses = Room("excuses","Listen, it's not your fault you've entered the room of excuses. Somebody else made you do it.")
+    world = [cPU,center_brain,useful_programming,lazy_hacks,programmer_humor,bad_jokes,sci_fi,productive_thought,distractions,excuses]
+    keyRooms = [center_brain,useful_programming,lazy_hacks,programmer_humor,bad_jokes,sci_fi,productive_thought,distractions,excuses]
 
     #Build random pathways off of the cPU.
     usedNames = [None]
@@ -78,14 +103,11 @@ def createWorld():
         buildRandomRooms(cPU, direction, 6, usedNames)
 
     #Connect in the key rooms.
-    connectToRandomRoom(puzzle1)
-    connectToRandomRoom(puzzle2)
-    connectToRandomRoom(puzzle3)
-    connectToRandomRoom(puzzle4)
-    connectToRandomRoom(puzzle5)
-    connectToRandomRoom(puzzle6)
+    for keyRoom in keyRooms:
+        connectToRandomRoom(keyRoom)
 
     #Add some random shortcuts.
     constructNonEuclidianPassages(random.randint(6,13))
+    populateMonsters(1,0,world)
 
     return world

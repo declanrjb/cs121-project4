@@ -30,6 +30,21 @@ class Player:
                 item.printBlurb()
         else:
             print("Too many thoughts...\n...I need to clear my head a bit.")
+    def navigate(self,start,destination):
+        i = 0
+        path = []
+        currRoom = start
+        while (i < 100) and (currRoom != destination):
+            j = 0
+            numExits = len(currRoom.exits)
+            targetExit = currRoom.exits[j][1]
+            while (targetExit in path) and (j < numExits):
+                targetExit = currRoom.exits[j][1]
+                j += 1
+            currRoom = targetExit
+            path.append(currRoom)
+            i += 1
+        return path
     def drop(self, item):
         #Remove all copies of the item
         while item in self.items.keys():

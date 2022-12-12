@@ -212,7 +212,7 @@ else:
     print(len(rooms))
     input("press enter to continue")
 playing = True
-possibleCommands = ["go","pickup","inventory","help","exit","attack","me","inspect","drop","wait"]
+possibleCommands = ["go","pickup","inventory","help","exit","attack","me","inspect","drop","wait","navigate"]
 while playing and player.alive:
     printSituation()
     commandSuccess = False
@@ -253,6 +253,12 @@ while playing and player.alive:
                 player.pickup(target)
             else:
                 commandSuccess = False
+        elif commandWords[0].lower() == "navigate":  #get directions to any room
+            destinationName = command[9:]
+            destination = findRoomByName(destinationName,rooms)
+            path = player.navigate(player.location,destination)
+            print(path)
+            input("Press enter to continue...")
         elif commandWords[0].lower() == "inventory":
             player.inventory()        
         elif commandWords[0].lower() == "help":

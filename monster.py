@@ -81,3 +81,24 @@ class Leisure(Monster):
         Monster.__init___(self, name, health, room)
         self.cost = cost #The time it takes to do the activity
         self.buff = buff #The amount of mental health healed
+
+class Essay(Assignment):
+    monsterType = "Essay"
+
+class Test(Assignment):
+    monsterType = "Test"
+
+class Presentation(Assignment):
+    monsterType = "Presentation"
+
+class ProblemSet(Assignment):
+    monsterType = "Problem Set"
+
+class Party(Leisure):
+    monsterType = "Party"
+
+class Game(Leisure):
+    monsterType = "Game"
+
+class TV(Leisure):
+    monsterType = "TV"

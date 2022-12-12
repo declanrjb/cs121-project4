@@ -123,3 +123,7 @@ class Player:
         #Regeneration
         if self.health < self.health_max:
             self.health += 1
+        #Assignments cause damage over time
+        for assignment in self.location.monsters:
+            if assignment.monsterType in ["Essay", "Test", "Presentation", "ProblemSet"]:
+                self.health -= assignment.damage

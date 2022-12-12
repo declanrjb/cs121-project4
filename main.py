@@ -256,7 +256,7 @@ while playing and player.alive:
         elif commandWords[0].lower() == "navigate":  #get directions to any room
             destinationName = command[9:]
             destination = findRoomByName(destinationName,rooms)
-            path = player.navigate(player.location,destination)
+            path = player.navigate(player.location,destination,[])
             print(path)
             input("Press enter to continue...")
         elif commandWords[0].lower() == "inventory":

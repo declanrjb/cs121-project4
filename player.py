@@ -1,4 +1,6 @@
 import os
+import random
+import updater
 
 def clear():
     os.system('cls' if os.name == 'nt' else 'clear')
@@ -13,6 +15,7 @@ class Player:
         self.headspace = 50
         self.headspace_max = self.headspace
         self.name = "player"
+        updater.register(self)
     def goDirection(self, direction):
         self.location.playerHere = False
         self.location = self.location.getDestination(direction)
@@ -30,23 +33,26 @@ class Player:
                 item.printBlurb()
         else:
             print("Too many thoughts...\n...I need to clear my head a bit.")
-    def navigate(self,start,destination):
+    def navigate(self,start,destination,prepath):
         if start == destination:
             return [destination]
         else:
             i = 0
-            path = [start]
+            path = prepath.append(start)
             currRoom = start
             while (i < 100) and (currRoom != destination):
                 shortestPath = None
                 targetExit = None
                 for exit in currRoom.exits:
-                    print(exit[1].name)
-                    print(destination.name)
-                    testPath = self.navigate(exit[1],destination)
-                    if (shortestPath == None) or (len(testPath) < len(shortestPath)):
-                        shortestPath = testPath
-                        targetExit = exit[1]
+                    if (exit[1] not in path):
+                        print(exit[1].name)
+                        print(destination.name)
+                        testPath = self.navigate(exit[1],destination,path)
+                        if (shortestPath == None) or (len(testPath) < len(shortestPath)):
+                            shortestPath = testPath
+                            targetExit = exit[1]
+                if targetExit == None:
+                    currRoom.exits[random.randint(0,(len(currRoom.exits)-1))][1]
                 '''
                 j = 0
                 numExits = len(currRoom.exits)

@@ -40,11 +40,36 @@ def createRandWorld():
                 openDirections.remove(exits[0])
         return [openDirections, randomRoom]
 
+    #Find all the open directions of a given room and return a list of them
+    def findOpenDirectionsOfRoom(room):
+        openDirections = directions + []
+        for exits in room.exits:
+            if exits[0] in openDirections:
+                openDirections.remove(exits[0])
+        return openDirections
+
+    #Helper function that returns a random room as long as that room has the given direction available
+    def pickRandomRoomWithDirection(direction):
+        currChoice = findOpenDirectionsOfRandomRoom()
+        openDirections = currChoice[0]
+        chosenRoom = currChoice[1]
+        i = 0
+        while (direction not in openDirections):
+            currChoice = findOpenDirectionsOfRandomRoom()
+            openDirections = currChoice[0]
+            chosenRoom = currChoice[1]
+            i += 1
+            if i > 1000:
+                return None
+        return chosenRoom
+        
+
     #Helper function that connects in a given room to a random place.
     def connectToRandomRoom(room):
-        randomRoom = findOpenDirectionsOfRandomRoom()
-        direction = random.choice(randomRoom[0])
-        Room.connectRooms(room, oppositeDirection(direction), randomRoom[1], direction)
+        outgoingDirection = random.choice(findOpenDirectionsOfRoom(room))
+        randomRoom = pickRandomRoomWithDirection(oppositeDirection(outgoingDirection))
+        if randomRoom != None:
+            Room.connectRooms(room, outgoingDirection, randomRoom, oppositeDirection(outgoingDirection))
 
     #Helper function that randomly connects two rooms to each other.
     def constructNonEuclidianPassages(n):
@@ -96,17 +121,36 @@ def createRandWorld():
     world = [center_brain,useful_programming,lazy_hacks,programmer_humor,bad_jokes,sci_fi,productive_thought,distractions,excuses]
     keyRooms = [useful_programming,lazy_hacks,programmer_humor,bad_jokes,sci_fi,productive_thought,distractions,excuses]
 
-    #Build random pathways off of the center_brain.
-    usedNames = [None]
-    for direction in directions:
-        buildRandomRooms(center_brain, direction, 6, usedNames)
+    
 
     #Connect in the key rooms.
+
+    #Build center_brain connections
+    Room.connectRooms(center_brain,"north",useful_programming,"south")
+    Room.connectRooms(center_brain,"east",productive_thought,"west")
+    Room.connectRooms(center_brain,"south",distractions,"north")
+    Room.connectRooms(center_brain,"west",sci_fi,"east")
+
+    #Build useful_programming connections
+    Room.connectRooms(useful_programming,"east",lazy_hacks,"west")
+    Room.connectRooms(useful_programming,"west",programmer_humor,"east")
+
+    #Build programmer_humor connections
+    Room.connectRooms(programmer_humor,"west",bad_jokes,"east")
+    Room.connectRooms(programmer_humor,"south",sci_fi,"north")
+
+    #Build distractions connections
+    Room.connectRooms(distractions,"south",excuses,"north")
+
+    #Build random pathways off of the center_brain.
+    usedNames = [None]
+    for direction in findOpenDirectionsOfRoom(center_brain):
+        buildRandomRooms(center_brain, direction, 6, usedNames)
+
     for keyRoom in keyRooms:
         connectToRandomRoom(keyRoom)
 
     #Add some random shortcuts.
-    constructNonEuclidianPassages(random.randint(6,13))
-    populateMonsters(10,10,world)
+    #constructNonEuclidianPassages(random.randint(6,13))
 
     return world

@@ -48,6 +48,8 @@ class Player:
                 for exit in currRoom.exits:
                     exitRoom = exit[1]
                     if (exitRoom in path) != True:
+                        print(exit[1].name)
+                        print(destination.name)
                         testPath = self.navigate(exit[1],destination,path)
                         if (shortestPath == None) or (len(testPath) < len(shortestPath)):
                             shortestPath = testPath

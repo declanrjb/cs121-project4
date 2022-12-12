@@ -205,7 +205,7 @@ if loading == "yes":
     print("Game loaded succesfully.")
     input("Press enter to continue...")
 else:
-    rooms = createWorld()
+    rooms = createRandWorld()
     player.location = rooms[0]
     rooms[0].playerHere = True
 
@@ -256,9 +256,12 @@ while playing and player.alive:
         elif commandWords[0].lower() == "navigate":  #get directions to any room
             destinationName = command[9:]
             destination = findRoomByName(destinationName,rooms)
-            print("Working...")
-            path = player.navigate(player.location,destination,[])
-            print(player.directions(path))
+            if destination != None:
+                print("Working...")
+                path = player.navigate(player.location,destination,[])
+                print(player.directions(path))
+            else:
+                print("I'm sorry, I don't know where that is.")
             input("Press enter to continue...")
         elif commandWords[0].lower() == "inventory":
             player.inventory()        

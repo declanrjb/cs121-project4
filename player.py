@@ -16,6 +16,7 @@ class Player:
         self.headspace_max = self.headspace
         self.name = "player"
         self.timeLeft = 1000
+        updater.register(self)
     def goDirection(self, direction):
         self.location.playerHere = False
         self.location = self.location.getDestination(direction)
@@ -123,20 +124,22 @@ class Player:
         self.timeLeft -= 1
         if self.timeLeft <= 0:
             self.alive = False
+            self.ending = "timeout"
         #Regeneration
         if self.health < self.health_max:
             self.health += 1
         #Assignments cause damage over time
-        for assignment in self.location.monsters:
+        '''for assignment in self.location.monsters:
             if assignment.monsterType in ["Essay", "Test", "Presentation", "ProblemSet"]:
-                self.health -= assignment.damage
+                self.health -= assignment.damage'''
         #When health reaches 0, you're forced to wait a random amount of time to heal.
         if self.health <= 0:
             print("#@*%")
-            print("You've burnt out.")
+            print("You're too stressed and need to relax.")
             for time in range(random.randint(0,50)):
                 updater.updateAll
             #If you're too bogged down with assingments to heal, you lose.
             if self.health <= 0:
                 self.alive = False
+                self.ending = "burnout"
             self.me()

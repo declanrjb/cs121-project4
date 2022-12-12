@@ -383,7 +383,8 @@ while playing and player.alive:
             commandSuccess = False
     if timePasses == True:
         updater.updateAll()
-
-    
-
-
+clear()
+if player.ending == "timeout":
+    print("Oh no!\nYou didn't finish the assignment by the deadline.")
+if player.ending == "burnout":
+    print("Oh no!\nYou got too bogged down with assigments and burnt out.")

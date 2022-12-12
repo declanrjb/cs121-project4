@@ -47,7 +47,7 @@ class Monster:
         i = 0
         path = []
         currRoom = start
-        while (i < 100) and (currRoom != destination):
+        while (i < 1000) and (currRoom != destination):
             j = 0
             numExits = len(currRoom.exits)
             targetExit = currRoom.exits[j][1]

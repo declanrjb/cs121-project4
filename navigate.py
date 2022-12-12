@@ -1,3 +1,5 @@
+import random
+
 def navigate(self,start,destination,prepath):
         if start == destination:
             return [destination]

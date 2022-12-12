@@ -34,6 +34,8 @@ class Player:
                 item.printBlurb()
         else:
             print("Too many thoughts...\n...I need to clear my head a bit.")
+
+    #Function to find the shortest path from one room to another
     def navigate(self,start,destination,prepath):
         if start == destination:
             return [destination]
@@ -58,6 +60,7 @@ class Player:
                 i += 1
         return path
 
+    #Helper function that translates paths from navigate into exit directions
     def directions(self,path):
         i = 0
         pathLength = len(path)

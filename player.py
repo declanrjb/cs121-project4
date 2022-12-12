@@ -38,33 +38,37 @@ class Player:
             return [destination]
         else:
             i = 0
-            path = prepath.append(start)
+            path = prepath + [start]
             currRoom = start
-            while (i < 100) and (currRoom != destination):
+            while (i < 10000) and (currRoom != destination):
                 shortestPath = None
                 targetExit = None
                 for exit in currRoom.exits:
-                    if (exit[1] not in path):
-                        print(exit[1].name)
-                        print(destination.name)
+                    exitRoom = exit[1]
+                    if (exitRoom in path) != True:
                         testPath = self.navigate(exit[1],destination,path)
                         if (shortestPath == None) or (len(testPath) < len(shortestPath)):
                             shortestPath = testPath
                             targetExit = exit[1]
                 if targetExit == None:
-                    currRoom.exits[random.randint(0,(len(currRoom.exits)-1))][1]
-                '''
-                j = 0
-                numExits = len(currRoom.exits)
-                targetExit = currRoom.exits[j][1]
-                while (targetExit in path) and (j < numExits):
-                    targetExit = currRoom.exits[j][1]
-                    j += 1
-                '''
+                    targetExit = currRoom.exits[random.randint(0,(len(currRoom.exits)-1))][1]
                 currRoom = targetExit
                 path.append(currRoom)
                 i += 1
         return path
+
+    def directions(self,path):
+        i = 0
+        pathLength = len(path)
+        directions = []
+        while i < (pathLength-1):
+            currRoom = path[i]
+            for checkExit in currRoom.exits:
+                if checkExit[1] == path[i+1]:
+                    directions.append(checkExit[0])
+            i += 1
+        return directions
+
     def drop(self, item):
         #Remove all copies of the item
         while item in self.items.keys():

@@ -65,6 +65,7 @@ class Player:
             self.items.pop(item)
             item.loc = self.location
             self.location.addItem(item)
+            self.headspace += item.weight
     def inventory(self):
         clear()
         print("I'm thinking about:")
@@ -122,6 +123,3 @@ class Player:
         #Regeneration
         if self.health < self.health_max:
             self.health += 1
-        if self.headspace < self.headspace_max:
-            self.headspace += 1
-

@@ -1,4 +1,6 @@
 import os
+import updater
+import random
 
 def clear():
     os.system('cls' if os.name == 'nt' else 'clear')
@@ -13,6 +15,7 @@ class Player:
         self.headspace = 50
         self.headspace_max = self.headspace
         self.name = "player"
+        self.timeLeft = 1000
     def goDirection(self, direction):
         self.location.playerHere = False
         self.location = self.location.getDestination(direction)
@@ -97,10 +100,7 @@ class Player:
         for i in self.items:
             print(i.name)
         print()
-        if self.alive:
-            print("And you aren't dead yet!")
-        else:
-            print("And you are now dead :(")
+        print("I have " + str(self.timeLeft) + " time left.")
         input("Press enter to continue...")
     def attackMonster(self, mon):
         clear()
@@ -120,6 +120,9 @@ class Player:
         input("Press enter to continue...")
 
     def update(self):
+        self.timeLeft -= 1
+        if self.timeLeft <= 0:
+            self.alive = False
         #Regeneration
         if self.health < self.health_max:
             self.health += 1
@@ -127,3 +130,13 @@ class Player:
         for assignment in self.location.monsters:
             if assignment.monsterType in ["Essay", "Test", "Presentation", "ProblemSet"]:
                 self.health -= assignment.damage
+        #When health reaches 0, you're forced to wait a random amount of time to heal.
+        if self.health <= 0:
+            print("#@*%")
+            print("You've burnt out.")
+            for time in range(random.randint(0,50)):
+                updater.updateAll
+            #If you're too bogged down with assingments to heal, you lose.
+            if self.health <= 0:
+                self.alive = False
+            self.me()

@@ -243,7 +243,7 @@ while playing and player.alive:
             
             turns = int(command[5:])
             wait_some_turns(turns)
-            print(str(turns) + " minutes go by. Time passes so slowly in this place.")
+            print(str(turns) + " time goes by. Time passes strangely in this place.")
             print()
             input("Press enter to continue...")
         elif commandWords[0].lower() == "pickup":  #can handle multi-word objects

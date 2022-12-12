@@ -1,4 +1,4 @@
-Total Points: 38
+Total Points: 44
 
 (x) “me” command (2 points): Create a command that lets the player see their current status, including their health and/or whatever other attributes you’ve added.
 
@@ -69,3 +69,5 @@ Total Points: 38
 ( ) graphical interface (10 points): Typing is annoying. Make the program work through a graphical interface instead of typed commands. You don’t have to create pictures that actually look like the world. You can have a window, with portions dedicated to displaying the description of the current room, what monsters, are there, what items are there, etc. Within this interface, actions should be made by clicking buttons with the mouse or by hitting single keys as controls, rather than just through typing commands. Common options here are the curses library or the “Tk interactive” library tkinter.
 
 ( ) choose your own (? points): Make whatever changes you want, beyond the required points, if it helps make the game better. If it’s important to you to get points for these changes, talk to Jim, David, or Eitan to figure out how many points they are worth.
+
+(x) navigation (6 points)

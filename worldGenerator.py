@@ -38,15 +38,24 @@ def createRandWorld():
         for exits in randomRoom.exits:
             if exits[0] in openDirections:
                 openDirections.remove(exits[0])
+        if len(openDirections) > 3:
+            openDirections = openDirections[0:2]
         return [openDirections, randomRoom]
 
     #Find all the open directions of a given room and return a list of them
     def findOpenDirectionsOfRoom(room):
-        openDirections = directions + []
-        for exits in room.exits:
-            if exits[0] in openDirections:
-                openDirections.remove(exits[0])
-        return openDirections
+        if len(room.exits) < 4:
+            openDirections = directions + []
+            for exits in room.exits:
+                if exits[0] in openDirections:
+                    openDirections.remove(exits[0])
+            numToReturn = 4 - len(room.exits)
+            returnDirections = openDirections[0:(numToReturn)]
+            print(room.name)
+            print(returnDirections)
+            return returnDirections
+        else:
+            return None
 
     #Helper function that returns a random room as long as that room has the given direction available
     def pickRandomRoomWithDirection(direction):
@@ -66,10 +75,11 @@ def createRandWorld():
 
     #Helper function that connects in a given room to a random place.
     def connectToRandomRoom(room):
-        outgoingDirection = random.choice(findOpenDirectionsOfRoom(room))
-        randomRoom = pickRandomRoomWithDirection(oppositeDirection(outgoingDirection))
-        if randomRoom != None:
-            Room.connectRooms(room, outgoingDirection, randomRoom, oppositeDirection(outgoingDirection))
+        if findOpenDirectionsOfRoom(room) != None:
+            outgoingDirection = random.choice(findOpenDirectionsOfRoom(room))
+            randomRoom = pickRandomRoomWithDirection(oppositeDirection(outgoingDirection))
+            if randomRoom != None:
+                Room.connectRooms(room, outgoingDirection, randomRoom, oppositeDirection(outgoingDirection))
 
     #Helper function that randomly connects two rooms to each other.
     def constructNonEuclidianPassages(n):
@@ -128,8 +138,6 @@ def createRandWorld():
     #Build center_brain connections
     Room.connectRooms(center_brain,"north",useful_programming,"south")
     Room.connectRooms(center_brain,"east",productive_thought,"west")
-    Room.connectRooms(center_brain,"south",distractions,"north")
-    Room.connectRooms(center_brain,"west",sci_fi,"east")
 
     #Build useful_programming connections
     Room.connectRooms(useful_programming,"east",lazy_hacks,"west")
@@ -141,6 +149,7 @@ def createRandWorld():
 
     #Build distractions connections
     Room.connectRooms(distractions,"south",excuses,"north")
+    Room.connectRooms(distractions,"north",sci_fi,"south")
 
     #Build random pathways off of the center_brain.
     usedNames = [None]

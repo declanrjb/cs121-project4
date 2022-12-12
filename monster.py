@@ -77,6 +77,7 @@ class Assignment(Monster):
                 self.moveTo(path[(len(path) - 1)])
 
 class Leisure(Monster):
+    monsterType = "Leisure"
     def __init__self(self, name, health, room, cost, buff):
         Monster.__init___(self, name, health, room)
         self.cost = cost #The time it takes to do the activity
@@ -93,12 +94,3 @@ class Presentation(Assignment):
 
 class ProblemSet(Assignment):
     monsterType = "Problem Set"
-
-class Party(Leisure):
-    monsterType = "Party"
-
-class Game(Leisure):
-    monsterType = "Game"
-
-class TV(Leisure):
-    monsterType = "TV"

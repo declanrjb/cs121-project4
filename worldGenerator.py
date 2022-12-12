@@ -76,7 +76,7 @@ def createRandWorld():
         for n in range(numAssignments):
             #Selects a unique name from the list while scrolling through the range. Currently supports only up to eight assignments.
             name = monsterNames[n]
-            health = random.randint(10,50)
+            health = random.randint(1,20)
             place = random.randint(0,(len(world)-1))
             monstRoom = world[place]
             damage = random.randint(1,10)

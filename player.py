@@ -40,10 +40,9 @@ class Player:
         if start == destination:
             return [destination]
         else:
-            i = 0
             path = prepath + [start]
             currRoom = start
-            while (i < 10000) and (currRoom != destination):
+            while currRoom != destination:
                 shortestPath = None
                 targetExit = None
                 for exit in currRoom.exits:
@@ -57,7 +56,6 @@ class Player:
                     targetExit = currRoom.exits[random.randint(0,(len(currRoom.exits)-1))][1]
                 currRoom = targetExit
                 path.append(currRoom)
-                i += 1
         return path
 
     #Helper function that translates paths from navigate into exit directions

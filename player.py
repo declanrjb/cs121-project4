@@ -121,7 +121,7 @@ class Player:
             print("You decide to tackle " + mon.name + ".")
             print()
             if mon.monsterType == "Essay":
-                self.time -= mon.health
+                self.timeLeft -= mon.health
                 print("You spend " + str(mon.health) + " time working on " + mon.name +".")
             if mon.monsterType == "Test":
                 self.health -= mon.health

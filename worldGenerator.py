@@ -81,7 +81,7 @@ def createRandWorld():
             monstRoom = world[place]
             damage = random.randint(1,10)
             speed = random.randint(1,3)
-            Assignment(name,health,monstRoom,damage,speed)
+            Essay(name,health,monstRoom,damage,speed)
 
     #Build the key rooms. 
     center_brain = Room("center_brain","You are now in the center of the brain.")
@@ -107,6 +107,6 @@ def createRandWorld():
 
     #Add some random shortcuts.
     constructNonEuclidianPassages(random.randint(6,13))
-    populateMonsters(10,10,world)
+    populateMonsters(8,10,world)
 
     return world

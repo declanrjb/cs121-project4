@@ -4,12 +4,11 @@ from item import *
 from monster import *
 import os
 import updater
-import ctypes
-from worldGenerator import createRandWorld
+from worldGenerator import *
 
 player = Player()
 
-def createWorld():
+'''def createWorld():
     #Build rooms
     center_brain = Room("center_brain","You are now in the center of the brain.")
     useful_programming = Room("useful_programming","You are now in the chamber of useful programming knowledge, a hallowed space filled mostly with CSC1 121 lecture notes.")
@@ -50,13 +49,14 @@ def createWorld():
     print(Bob.player_path(Bob.room))
     input("Press enter to continue...")
 
-    return rooms
+    return rooms'''
 
 def clear():
     os.system('cls' if os.name == 'nt' else 'clear')
 
 def printSituation():
     clear()
+    print(player.location.name)
     print(player.location.desc)
     print()
     if player.location.hasMonsters():
@@ -205,7 +205,7 @@ if loading == "yes":
     print("Game loaded succesfully.")
     input("Press enter to continue...")
 else:
-    rooms = createWorld()
+    rooms = createRandWorld()
     player.location = rooms[0]
     rooms[0].playerHere = True
 
@@ -270,7 +270,7 @@ while playing and player.alive:
             targetName = command[7:]
             target = player.location.getMonsterByName(targetName)
             if target != False:
-                player.attackMonster(target)
+                player.engageActivity(target)
             else:
                 print("No such monster.")
                 commandSuccess = False

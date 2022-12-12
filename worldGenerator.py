@@ -14,14 +14,14 @@ def createRandWorld():
 
     #Core function that builds a random network of rooms, branching out from a given starting room.
     def buildRandomRooms(parentRoom, parentDirection, depth, usedNames):
-        print("depth" + str(depth))
         roomNamePrefixes = ["", "Studious ", "Creepy ", "Austentatious ", "Sactified ", "Abundant ", "Swag "]
         roomNames = ["Hall of ", "Archipelago of ", "Place of ", "Escalator to ", "Sanctum of ", "Forest of "]
         roomNameSuffixes = ["Suffering", "Time", "Sanctuary", "Jellyfish", "Factoids", "Capitalism"]
-        descriptions = ["a", "b", "c", "d", "e", "f"]
         name = None
         while name in usedNames:
             name = random.choice(roomNamePrefixes)+random.choice(roomNames)+random.choice(roomNameSuffixes)
+        description = "You are now in the " + name
+        descriptions = [description]
         currRoom = Room(name, random.choice(descriptions))
         Room.connectRooms(parentRoom, parentDirection, currRoom, oppositeDirection(parentDirection))
         usedNames.append(name)
@@ -53,8 +53,6 @@ def createRandWorld():
                     openDirections.remove(exits[0])
             numToReturn = 3 - len(room.exits)
             returnDirections = openDirections[0:(numToReturn)]
-            print(room.name)
-            print(returnDirections)
             return returnDirections
         else:
             return None

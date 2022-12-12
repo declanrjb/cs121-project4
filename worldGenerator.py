@@ -119,7 +119,7 @@ def createRandWorld():
             Assignment(name,health,monstRoom,damage,speed)
 
     #Build the key rooms. 
-    center_brain = Room("center_brain","You are now in the center of the brain.")
+    center_brain = Room("center_brain","You are now in the center of the brain. Three labyrinth guards stand ahead, hands on their swords and faces shadowed by their hoods.")
     useful_programming = Room("useful_programming","You are now in the chamber of useful programming knowledge, a hallowed space filled mostly with CSC1 121 lecture notes.")
     lazy_hacks = Room("lazy_hacks","You are now in the room of lazy hacks. Every surface, from floor to walls to ceiling, is a chalkboard - but most of the notes you've taken there are covered up by the shelves of Stack Overflow comments.")
     programmer_humor = Room("programmer_humor","You have entered the sanctum of programmer humor, a place of many memes stolen from many subreddits.")
@@ -130,6 +130,8 @@ def createRandWorld():
     excuses = Room("excuses","Listen, it's not your fault you've entered the room of excuses. Somebody else made you do it.")
     world = [center_brain,useful_programming,lazy_hacks,programmer_humor,bad_jokes,sci_fi,productive_thought,distractions,excuses]
     keyRooms = [useful_programming,lazy_hacks,programmer_humor,bad_jokes,sci_fi,productive_thought,distractions,excuses]
+
+    helpyGuard = Guard("Labyrinth Guard the First",center_brain)
 
     
 

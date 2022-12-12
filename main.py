@@ -60,7 +60,7 @@ def printSituation():
     print(player.location.desc)
     print()
     if player.location.hasMonsters():
-        print("This room contains the following monsters:")
+        print("This room contains the following beings:")
         for m in player.location.monsters:
             print(m.name)
         print()

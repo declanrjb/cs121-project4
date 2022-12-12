@@ -42,22 +42,41 @@ class Monster:
             path.append(currRoom)
             i += 1
         return path
-    #Basic navigation
-    def navigate(self,start,destination):
-        i = 0
-        path = []
-        currRoom = start
-        while (i < 1000) and (currRoom != destination):
-            j = 0
-            numExits = len(currRoom.exits)
-            targetExit = currRoom.exits[j][1]
-            while (targetExit in path) and (j < numExits):
-                targetExit = currRoom.exits[j][1]
-                j += 1
-            currRoom = targetExit
-            path.append(currRoom)
-            i += 1
+    #Function to find the shortest path from one room to another
+    def navigate(self,start,destination,prepath):
+        if start == destination:
+            return [destination]
+        else:
+            path = prepath + [start]
+            currRoom = start
+            while currRoom != destination:
+                shortestPath = None
+                targetExit = None
+                for exit in currRoom.exits:
+                    exitRoom = exit[1]
+                    if (exitRoom in path) != True:
+                        testPath = self.navigate(exit[1],destination,path)
+                        if (shortestPath == None) or (len(testPath) < len(shortestPath)):
+                            shortestPath = testPath
+                            targetExit = exit[1]
+                if targetExit == None:
+                    targetExit = currRoom.exits[random.randint(0,(len(currRoom.exits)-1))][1]
+                currRoom = targetExit
+                path.append(currRoom)
         return path
+
+    #Helper function that translates paths from navigate into exit directions
+    def directions(self,path):
+        i = 0
+        pathLength = len(path)
+        directions = []
+        while i < (pathLength-1):
+            currRoom = path[i]
+            for checkExit in currRoom.exits:
+                if checkExit[1] == path[i+1]:
+                    directions.append(checkExit[0])
+            i += 1
+        return directions
 
 class Assignment(Monster):
     def __init__(self, name, health, room, damage, speed):
@@ -94,3 +113,10 @@ class Presentation(Assignment):
 
 class ProblemSet(Assignment):
     monsterType = "Problem Set"
+
+class Guard(Monster):
+    def __init__(self,name,room):
+        Monster.__init__(self,name,0,room)
+    
+    def interact(self,interaction):
+        print(interaction)

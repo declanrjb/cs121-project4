@@ -1,7 +1,7 @@
 from room import *
 import random
 from monster import *
-def createWorld():
+def createRandWorld():
 
     #Helper list and function for directional operations.
     directions = ["north", "south", "east", "west", "up", "down"]

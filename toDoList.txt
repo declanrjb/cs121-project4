@@ -1,6 +1,7 @@
 To Do List:
 ( ) healing items (2 points): Create items that players can use to restore health. These items should only be usable once each and should disappear when used.
 ( ) introducing monsters during play (2 points): Make it so that over time new monsters appear in the world.
+- This can be when thoughts are placed in the excuses room
 ( ) loot (3 points): Make it so that defeating some monsters causes useful items to appear. There should be some amount of randomness about what those items are.
 ( ) more monsters (3 points): Create several different types of monsters. They should not just have different names, but really be different in important ways.
 ( ) player attributes (3 points): By default the only characteristic of the player is their health. Add more attributes that affect what the player can do.

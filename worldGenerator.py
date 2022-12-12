@@ -108,6 +108,6 @@ def createWorld():
 
     #Add some random shortcuts.
     constructNonEuclidianPassages(random.randint(6,13))
-    populateMonsters(8,0,world)
+    populateMonsters(1,0,world)
 
     return world

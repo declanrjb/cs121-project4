@@ -34,28 +34,11 @@ class Assignment(Monster):
         self.speed = speed
         self.cooldown = 0
 
-    def path_to_player(self,currRoom):
-        if currRoom.playerHere or len(currRoom.exits) == 0:
-            return []
-        else:
-            numExits = len(currRoom.exits)
-            '''
-            shortestPath = None
-            for exit in currRoom.exits:
-                if exit[1]
-                localPath = self.path_to_player(exit[1])
-                if shortestPath == None or len(localPath) < len(shortestPath):
-                    shortestPath = localPath
-            '''
-            targetExit = random.randint(1,numExits) - 1
-            nextRoom = currRoom.exits[numExits-1][1]
-            priorPath = self.path_to_player(nextRoom)
-            return priorPath + [currRoom.name]
-
     #Basic pathfinding
-    def player_path(self,currRoom):
+    def player_path(self,start):
         i = 0
         path = []
+        currRoom = start
         while (i < 100) and (currRoom.playerHere != True):
             j = 0
             numExits = len(currRoom.exits)
@@ -70,8 +53,8 @@ class Assignment(Monster):
         
     def update(self):
         if (random.randint(0,4) < 2) and (self.room.playerHere != True):
-            path = self.player_path(self.room)
-            print(path)
+            path = self.player_path([self.room])
+            input("press enter to continue")
             #If there's more path than speed, move along the path up to my speed. Else, immediately move to 
             # the end of the path, without overshooting it.
             if self.speed <= len(path):

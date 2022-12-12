@@ -14,9 +14,9 @@ def createRandWorld():
 
     #Core function that builds a random network of rooms, branching out from a given starting room.
     def buildRandomRooms(parentRoom, parentDirection, depth, usedNames):
-        roomNamePrefixes = ["a", "b", "c", "d", "e", "f"]
-        roomNames = ["a", "b", "c", "d", "e", "f"]
-        roomNameSuffixes = ["a", "b", "c", "d", "e", "f"]
+        roomNamePrefixes = ["", "Studious ", "Creepy ", "Austentatious ", "Sactified ", "Abundant ", "Swag "]
+        roomNames = ["Hall of ", "Archipelago of ", "Place of ", "Escalator to ", "Sanctum of ", "Forest of "]
+        roomNameSuffixes = ["Suffering", "Time", "Sanctuary", "Jellyfish", "Factoids", "Capitalism"]
         descriptions = ["a", "b", "c", "d", "e", "f"]
         name = None
         while name in usedNames:

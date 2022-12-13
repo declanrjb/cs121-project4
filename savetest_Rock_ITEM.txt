@@ -1,4 +1,0 @@
-Rock
-This is just a rock.
-useful_programming
-1

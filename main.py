@@ -427,8 +427,14 @@ while playing and player.alive:
             commandSuccess = False
     if timePasses == True:
         updater.updateAll()
+        if checkVictory():
+            player.ending = "victory"
+            playing = False
+
 clear()
 if player.ending == "timeout":
     print("Oh no!\nYou didn't finish the assignment by the deadline.")
-if player.ending == "burnout":
+elif player.ending == "burnout":
     print("Oh no!\nYou got too bogged down with assigments and burnt out.")
+elif player.ending == "victory":
+    print("Congratulations! You organized your thoughts, completed the final project on time, and passed CS 121!!")

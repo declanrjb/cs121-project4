@@ -1,6 +1,7 @@
 from room import *
 import random
 from monster import *
+from item import *
 def createRandWorld():
 
     #Helper list and function for directional operations.
@@ -159,6 +160,12 @@ def createRandWorld():
     helpyGuard = HelpfulGuard("Labyrinth Guard the First",center_brain,world)
     unhelpyGuard = UnhelpfulGuard("Labyrinth Guard the Second",center_brain,world)
     stabGuard = StabbyGuard("Labyrinth Guard Who Stabs People Who Ask Tricky Questions",center_brain,world)
+
+    epithets = [" the First"," the Second"," the Third"," the Fourth"," the Fifth"," the Sixth"," the Seventh"," the Eighth"," the Ninth"]
+    for j in range(0,8):
+        currThought = Thought("Thought" + epithets[j],1)
+        currThought.pick_blurb(j)
+        currThought.putInRoom(random.choice(world))
 
     #for keyRoom in keyRooms:
         #connectToRandomRoom(keyRoom)

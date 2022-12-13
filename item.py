@@ -23,7 +23,7 @@ class Thought(Item):
     def __init__(self, name, weight):
         Item.__init__(self, name, "This is just a thought.", weight)
         #Declare a preset list of possible blurbs
-        blurbs = {
+        self.blurbs = {
             "I really need to do the HUM reading":"productive_thought",
             "Excuse me, but real programmers use butterflies":"programmer_humor",
             "Python is such a lovely language":"useful_programming",
@@ -36,14 +36,14 @@ class Thought(Item):
             "Whoa":"sci_fi",
             "Take off and nuke it from orbit - it's the only way to be sure":"sci_fi"
         }
-        #Pick a blurb for this thought from the dictionary at random
-        index = random.randint(0,(len(blurbs)-1))
+        
+    def pick_blurb(self,n):
         i = 0
-        for key in blurbs:
-            if i == index:
+        for key in self.blurbs:
+            if i == n:
                 self.blurb = key
             i += 1
-        self.destination = blurbs[self.blurb]
+        self.destination = self.blurbs[self.blurb]
     
     def printBlurb(self):
         #Prints the blurb in italics using an ANSI escape sequence

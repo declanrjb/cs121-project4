@@ -183,6 +183,6 @@ def createRandWorld():
         connectToRandomRoom(keyRoom)"""
 
     #Add some random shortcuts.
-    constructNonEuclidianPassages(random.randint(6,13))
+    #constructNonEuclidianPassages(random.randint(6,13))
 
     return world

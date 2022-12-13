@@ -4,7 +4,7 @@ from monster import *
 from item import *
 def createRandWorld():
 
-    #Helper list and function for directional operations.
+    """Helper list and function for directional operations. The list is specifically ordered so that opposite directions are adjacent, which the function relies on."""
     directions = ["north", "south", "east", "west", "up", "down"]
     def oppositeDirection(direction):
         for i in range(6):
@@ -13,20 +13,23 @@ def createRandWorld():
                     return directions[i+1]
                 return directions[i-1]
 
-    #Core function that builds a random network of rooms, branching out from a given starting room.
+    """Core function that builds a random network of rooms, branching out from a given starting room."""
     def buildRandomRooms(parentRoom, parentDirection, depth, usedNames):
         roomNamePrefixes = ["", "Studious ", "Creepy ", "Austentatious ", "Sactified ", "Abundant ", "Swag "]
         roomNames = ["Hall of ", "Archipelago of ", "Place of ", "Escalator to ", "Sanctum of ", "Forest of "]
         roomNameSuffixes = ["Suffering", "Time", "Sanctuary", "Jellyfish", "Factoids", "Capitalism"]
         name = None
+        #Picks a random room name that hasn't been used yet.
         while name in usedNames:
             name = random.choice(roomNamePrefixes)+random.choice(roomNames)+random.choice(roomNameSuffixes)
+        usedNames.append(name)
         description = "You are now in the " + name
         descriptions = [description]
+        #Creates a room with the chosen name.
         currRoom = Room(name, random.choice(descriptions))
+        #Connects the created room to its parent room from a specified direction.
         Room.connectRooms(parentRoom, parentDirection, currRoom, oppositeDirection(parentDirection))
-        usedNames.append(name)
-        world.append(parentRoom.exits[len(parentRoom.exits)-1][1])
+        world.append(currRoom)
         if depth > 0 and (findOpenDirectionsOfRoom(currRoom) != None):
             for direction in findOpenDirectionsOfRoom(currRoom):
                 if direction != parentDirection:
@@ -76,11 +79,10 @@ def createRandWorld():
 
     #Helper function that connects in a given room to a random place.
     def connectToRandomRoom(room):
-        if findOpenDirectionsOfRoom(room) != None:
-            outgoingDirection = random.choice(findOpenDirectionsOfRoom(room))
-            randomRoom = pickRandomRoomWithDirection(oppositeDirection(outgoingDirection))
-            if randomRoom != None:
-                Room.connectRooms(room, outgoingDirection, randomRoom, oppositeDirection(outgoingDirection))
+        randomRoom = findOpenDirectionsOfRandomRoom()
+        direction = random.choice(randomRoom[0])
+        Room.connectRooms(room, oppositeDirection(direction), randomRoom[1], direction)
+        print(randomRoom)
 
     #Helper function that randomly connects two rooms to each other.
     def constructNonEuclidianPassages(n):
@@ -177,10 +179,10 @@ def createRandWorld():
     
     populateMonsters(5,world)
 
-    #for keyRoom in keyRooms:
-        #connectToRandomRoom(keyRoom)
+    """for keyRoom in keyRooms:
+        connectToRandomRoom(keyRoom)"""
 
     #Add some random shortcuts.
-    #constructNonEuclidianPassages(random.randint(6,13))
+    constructNonEuclidianPassages(random.randint(6,13))
 
     return world

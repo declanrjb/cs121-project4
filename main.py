@@ -283,7 +283,7 @@ while playing and player.alive:
                 player.pickup(target)
             else:
                 commandSuccess = False
-        elif commandWords[0].lower() == "help!":  #summon a random guard to your aid if you get lost
+        elif commandWords[0].lower() == "help!" or commandWords[0].lower() == "help":  #summon a random guard to your aid if you get lost
             print("A labyrinth guard comes running to your rescue!")
             input("Press enter to continue...")
             labyrinthGuards = []
@@ -296,8 +296,6 @@ while playing and player.alive:
             chosenGuard.interact(player)
         elif commandWords[0].lower() == "inventory":
             player.inventory()        
-        elif commandWords[0].lower() == "help":
-            showHelp()
         elif commandWords[0].lower() == "exit":
             playing = False
         elif commandWords[0].lower() == "attack":

@@ -21,6 +21,9 @@ class Item:
         self.loc = room
         room.addItem(self)
 
+#A subclass of item that represents thoughts in the brain which have to be collected and organized. 
+# Each has a "blurb", the thought itself, and a "destination" attribute that designates a room it must 
+# be placed in in order for the victory condition to be achieved.
 class Thought(Item):
     def __init__(self, name, weight, world):
         Item.__init__(self, name, "This is just a thought.", weight, world)
@@ -38,7 +41,9 @@ class Thought(Item):
             "Whoa":"sci_fi",
             "Take off and nuke it from orbit - it's the only way to be sure":"sci_fi"
         }
-        
+    
+    #Helper function that sets a blurb and destination based on a dictionary place index. Called by the world 
+    # generator to ensure that each thought is unique.
     def pick_blurb(self,n):
         i = 0
         for key in self.blurbs:
@@ -47,12 +52,15 @@ class Thought(Item):
             i += 1
         self.destination = self.blurbs[self.blurb]
     
+    #Helper function that prints a thought in italic text
     def printBlurb(self):
         #Prints the blurb in italics using an ANSI escape sequence
         print("You think: " + "\x1B[3m" + self.blurb + "," + "\x1B[0m" + " and then shelve that for later.")
         print()
         input("Press enter to continue...")
 
+    #Helper function that recalls the superclass's putInRoom while adding the additional behavior that a 
+    # thought placed in excuses will spawn a new monster.
     def putInRoom(self, room):
         super().putInRoom(room)
         if room.name == "excuses":
@@ -61,5 +69,7 @@ class Thought(Item):
             print()
             input("Press enter to continue...")
     
+    #Simple version of put in room to be called by the world generator - preventing excuses spawn dialogue from playing 
+    # while the world is building.
     def generatorPlace(self, room):
         super().putInRoom(room)

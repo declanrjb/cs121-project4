@@ -12,7 +12,7 @@ class Player:
         self.health = 50
         self.health_max = self.health
         self.alive = True
-        self.headspace = 50
+        self.headspace = 5
         self.headspace_max = self.headspace
         self.name = "player"
         self.timeLeft = 1000

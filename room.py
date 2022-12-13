@@ -10,6 +10,7 @@ class Room:
         self.playerHere = False
     def addExit(self, exitName, destination):
         self.exits.append([exitName, destination])
+    #Given an exit direction, return the room object that exit connects to
     def getDestination(self, direction):
         for e in self.exits:
             if e[0] == direction:
@@ -49,5 +50,3 @@ class Room:
         return False
     def randomNeighbor(self):
         return random.choice(self.exits)[1]
-
-#class puzzleRoom(Room):

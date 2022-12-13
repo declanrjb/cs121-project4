@@ -100,10 +100,22 @@ def directions(path):
         i += 1
     return directions
 
-loading = input("Would you like to load a previous game? ")
-if loading == "yes":
-    filecore = input("What save file would you like to load from? ")
+#Helper function that takes a prompt and its valid responses and asks for input until it gets a valid response.
+def inputChecker(question,validResponses):
+    enteredInput = input(question)
+    while enteredInput not in validResponses:
+        print("Please enter a valid input.")
+        print()
+        enteredInput = input(question)
+    return enteredInput
 
+#Loop until the player gives a valid answer to the saving and loading prompt
+loading = inputChecker("Would you like to load a previous game? ",["yes","no"])
+
+#This procedure loads the game from a series of saved text files.
+if loading == "yes":
+
+    #Helper function that constructs an item object from an item save file
     def load_item(filename,rooms):
         itemFile = open(filename, "r")
         itemName = itemFile.readline().replace("\n","")
@@ -117,6 +129,7 @@ if loading == "yes":
         else:
             player.pickup(currItem)
 
+    #Helper function that constructs a monster function from a monster save file
     def load_monster(filename,rooms):
         monsterFile = open(filename, "r")
         monstName = monsterFile.readline().replace("\n","")
@@ -125,10 +138,12 @@ if loading == "yes":
         monsterRoom = findRoomByName(monsterRoomName,rooms)
         currMonster = Monster(monstName,monstHealth,monsterRoom,rooms)
 
+    #Helper function that loads rooms and their exits from the ROOMS and WORLD files
     def load_world(savename):
         roomsName = savename + "_ROOMS.txt"
         filename = savename + "_WORLD.txt"
 
+        #Open the file ROOMS and construct bare bones rooms with names only
         file = open(roomsName, "r")
         rooms = []
         line = file.readline().replace("\n","")
@@ -138,6 +153,7 @@ if loading == "yes":
             rooms.append(currRoom)
             line = file.readline().replace("\n","")
 
+        #Now that we have some rooms, fill them in with details like monsters and items
         file = open(filename, "r")
         line = file.readline().replace("\n","")
         while line != "":
@@ -162,15 +178,16 @@ if loading == "yes":
                 currRoom.desc = file.readline().replace("\n","")
                 currRoom.playerHere = bool(file.readline().replace("\n",""))
 
+            #If no conditions match, advance one line and repeat
             line = file.readline().replace("\n","")
 
         return rooms
 
+    #Helper function that loads player attributes from a player save file
     def load_player(filename,rooms):
         file = open(filename, "r")
         location_name = file.readline().replace("\n","")
         player.location = findRoomByName(location_name,rooms)
-        print(player.location)
         itemLine = file.readline().replace("\n","")
         if "ITEM.txt" in itemLine:
             load_item(itemLine,rooms)
@@ -179,21 +196,34 @@ if loading == "yes":
         player.headspace = int(file.readline().replace("\n",""))
         player.name = file.readline().replace("\n","")
     
-    worldfile = filecore
-    rooms = load_world(worldfile)
+    #Simple loop to check if the entered save file is valid and request another one if it is not
+    fileSuccess = False
+    while not fileSuccess:    
+        filecore = input("What save file would you like to load from? ")
 
-    playerfile = filecore + "_PLAYER.txt"
-    load_player(playerfile,rooms)
+        worldfile = filecore
+        playerfile = filecore + "_PLAYER.txt"
 
-    print()
-    print("Game loaded succesfully.")
-    input("Press enter to continue...")
+        try:
+            #Check if the player version of the file exists. If it does not, likely none of them will.
+            open(playerfile, "r")
+        except:
+            print("No such save file.")
+            print()
+        else:
+            rooms = load_world(worldfile)
+            load_player(playerfile,rooms)
+            fileSuccess = True
+            print()
+            print("Game loaded succesfully.")
+            input("Press enter to continue...")
 else:
     rooms = createRandWorld()
     player.location = rooms[0]
     rooms[0].playerHere = True
+
 playing = True
-possibleCommands = ["go","pickup","inventory","help","exit","attack","me","inspect","drop","wait","talk"]
+possibleCommands = ["go","pickup","inventory","help","exit","attack","me","inspect","drop","wait","talk","save"]
 while playing and player.alive:
     printSituation()
     commandSuccess = False
@@ -206,16 +236,21 @@ while playing and player.alive:
         length = len(slice)
         possibleMatches = 0
         match = ""
+        #Match input against possible commands based on mini slices of strings. Used to implement command abbreviations.
         for possibleCommand in possibleCommands:
             if possibleCommand[0:length] == slice:
                 possibleMatches += 1
                 match = possibleCommand
+        #If there is a unique match to a command, autofill it. If not, proceed without doing anything.
         if possibleMatches == 1:
             commandWords[0] = match
+        #Go to a new room
         if commandWords[0].lower() == "go":   #cannot handle multi-word directions
             player.goDirection(commandWords[1]) 
             timePasses = True
+        #Wait for some (non-zero) time
         elif commandWords[0].lower() == "wait":   #Update the updater several iterations when asked
+            #Helper function that triggers the updater a given number of times
             def wait_some_turns(turns):
                 i = 0
                 while i < turns:
@@ -226,6 +261,7 @@ while playing and player.alive:
             print(str(turns) + " time goes by. Time passes strangely in this place.")
             print()
             input("Press enter to continue...")
+        #Pickup an object in a room
         elif commandWords[0].lower() == "pickup":  #can handle multi-word objects
             targetName = command[7:]
             target = player.location.getItemByName(targetName)
@@ -237,17 +273,27 @@ while playing and player.alive:
             print("A labyrinth guard comes running to your rescue!")
             input("Press enter to continue...")
             labyrinthGuards = []
+            #Search all rooms looking for labyrinth guards and return a list of them
             for room in rooms:
                 for monst in room.monsters:
                     if "Labyrinth Guard" in monst.name:
                         labyrinthGuards.append(monst)
+            #Pick a random labyrinth guard and summon him or her to the player's location.
             chosenGuard = random.choice(labyrinthGuards)
             chosenGuard.moveTo(player.location)
+            #If the chosen guard is the stabby guard, print a quick warning
+            if chosenGuard.name == "Labyrinth Guard Who Stabs People Who Ask Tricky Questions":
+                print("Unfortunately, it happens to be the Labyrinth Guard Who Stabs People Who Ask Tricky Questions.")
+                print()
+                input("Press enter to continue...")
             chosenGuard.interact(player)
+        #Print the player's current inventory
         elif commandWords[0].lower() == "inventory":
             player.inventory()        
+        #Exit the game
         elif commandWords[0].lower() == "exit":
             playing = False
+        #Attack an assignment
         elif commandWords[0].lower() == "attack":
             targetName = command[7:]
             target = player.location.getMonsterByName(targetName)
@@ -257,18 +303,29 @@ while playing and player.alive:
             else:
                 print("No such monster.")
                 commandSuccess = False
+        #Talk to a creature capable of talking
         elif commandWords[0].lower() == "talk":
             targetName = command[5:]
             target = player.location.getMonsterByName(targetName)
+            #The getMonsterByName() function will return False if there is no monster by that name to be found. If so, 
+            # proceed without interacting and request another input.
             if target != False:
-                target.interact(player)
+                #Only interact if the target creature is something that can talk.
+                if "Labyrinth Guard" in target.name:
+                    target.interact(player)
+                else:
+                    print("You can't talk to that.")
             else:
-                print("No such monster.")
+                print("No such creature.")
                 commandSuccess = False
+        #Print the player's current status.
         elif commandWords[0].lower() == "me":
             player.me()
+        #Save the game
         elif commandWords[0].lower() == "save":
 
+            #Save the attributes of a specific monster object to a unique text file, 
+            # named with the monster's name plus a prefix and suffix
             def save_monster(savename,monster):
                 filename = savename + "_" + monster.name + "_" + "MONSTER" + ".txt"
                 file = open(filename, "w")
@@ -278,6 +335,8 @@ while playing and player.alive:
                 file.close()
                 return filename
 
+            #Save the attributes of a given item object to a unique text file, 
+            # named with the item's name plus a prefix and suffix.
             def save_item(savename,item):
                 filename = savename + "_" + item.name + "_" + "ITEM" + ".txt"
                 file = open(filename, "w")
@@ -288,6 +347,7 @@ while playing and player.alive:
                 file.close()
                 return filename
 
+            #Save the attributes of the player to a PLAYER save file
             def save_player(savename):
                 filename = savename + "_" + "PLAYER" + ".txt"
                 file = open(filename, "w")
@@ -303,6 +363,8 @@ while playing and player.alive:
                 file.write(str(player.name) + "\n")
                 file.close()
             
+            #Save the attributes of the world to two text files, ROOMS, which contains only room names, 
+            # and WORLD, which contains full room attributes
             def save_world(savename):
                 filename = savename + "_" + "WORLD" + ".txt"
                 file = open(filename, "w")
@@ -312,6 +374,8 @@ while playing and player.alive:
                     file.write(str(room.name) + "\n")
                     print("writing start new room")
 
+                    #If the room contains monsters, write out a series of monster save files and write the names of 
+                    # those files as lines in this top level file. Else, write "no-monsters"
                     if len(room.monsters) > 0:
                         for monster in room.monsters:
                             file.write(str(save_monster(savename,monster)) + "\n")
@@ -323,6 +387,8 @@ while playing and player.alive:
                         file.write(str(baseExit[0]) + "," + str(baseExit[1]) + "\n")
                     file.write("END-EXITS" + "\n")
 
+                    #If the room contains items, write out a series of item save files and write the names of those 
+                    # files as lines in this top level file. Else, write "no-items"
                     if len(room.items) > 0:
                         for item in room.items:
                             file.write(str(save_item(savename,item)) + "\n")
@@ -346,6 +412,7 @@ while playing and player.alive:
             print()
             print("Game saved succesfully.")
             input("Press enter to continue...")
+        #Inspect an item, but only if it exists
         elif commandWords[0].lower() == "inspect":
             targetName = command[8:]
             target = player.location.getItemByName(targetName)
@@ -386,3 +453,5 @@ elif player.ending == "burnout":
     print("Oh no!\nYou got too bogged down with assigments and burnt out.")
 elif player.ending == "victory":
     print("Congratulations! You organized your thoughts, completed the final project on time, and passed CS 121!!")
+else:
+    print("See you next time...")

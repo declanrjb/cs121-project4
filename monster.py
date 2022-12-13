@@ -121,12 +121,6 @@ class Essay(Assignment):
 class Test(Assignment):
     monsterType = "Test"
 
-class Presentation(Assignment):
-    monsterType = "Presentation"
-
-class ProblemSet(Assignment):
-    monsterType = "Problem Set"
-
 class Guard(Monster):
     def __init__(self,name,room,world):
         self.name = name
@@ -134,6 +128,12 @@ class Guard(Monster):
         self.room = room
         room.addMonster(self)
         self.world = world
+        self.monsterType = "Test"
+        updater.register(self)
+    
+    def update(self):
+        #do nothing
+        self.name = self.name
         
 class HelpfulGuard(Guard):
     def __init__(self,name,room,world):

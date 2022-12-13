@@ -18,6 +18,7 @@ class Player:
         self.timeLeft = 1000
         self.stabWounds = 0
         updater.register(self)
+        self.ending = None
     def goDirection(self, direction):
         self.location.playerHere = False
         self.location = self.location.getDestination(direction)

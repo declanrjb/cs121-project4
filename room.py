@@ -13,6 +13,7 @@ class Room:
     def getDestination(self, direction):
         for e in self.exits:
             if e[0] == direction:
+                print(e[1])
                 return e[1]
     def connectRooms(room1, dir1, room2, dir2):
         #creates "dir1" exit from room1 to room2 and vice versa

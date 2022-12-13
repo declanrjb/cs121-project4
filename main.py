@@ -9,52 +9,10 @@ from worldGenerator import createRandWorld
 
 player = Player()
 
-def createWorld():
-    #Build rooms
-    center_brain = Room("center_brain","You are now in the center of the brain.")
-    useful_programming = Room("useful_programming","You are now in the chamber of useful programming knowledge, a hallowed space filled mostly with CSC1 121 lecture notes.")
-    lazy_hacks = Room("lazy_hacks","You are now in the room of lazy hacks. Every surface, from floor to walls to ceiling, is a chalkboard - but most of the notes you've taken there are covered up by the shelves of Stack Overflow comments.")
-    programmer_humor = Room("programmer_humor","You have entered the sanctum of programmer humor, a place of many memes stolen from many subreddits.")
-    bad_jokes = Room("bad_jokes","You are now in the room of bad jokes. And I mean *really* bad jokes. Abandon hope, all ye who enter here.")
-    sci_fi = Room("sci_fi","You are now in the vault of out of place sci-fi references, a room strangely larger than any other in this brain.")
-    productive_thought = Room("productive_thought","You are now in the room of productive academic thought. Sadly, there's quite a lot of dust here.")
-    distractions = Room("distractions","You are now in the room of distractions - Hey, did you know the new NK Jemisin book just came out?")
-    excuses = Room("excuses","Listen, it's not your fault you've entered the room of excuses. Somebody else made you do it.")
-
-    rooms = [center_brain,useful_programming,lazy_hacks,programmer_humor,bad_jokes,sci_fi,productive_thought,distractions,excuses]
-
-    #Build center_brain connections
-    Room.connectRooms(center_brain,"north",useful_programming,"south")
-    Room.connectRooms(center_brain,"east",productive_thought,"west")
-    Room.connectRooms(center_brain,"south",distractions,"north")
-    Room.connectRooms(center_brain,"west",sci_fi,"east")
-
-    #Build useful_programming connections
-    Room.connectRooms(useful_programming,"east",lazy_hacks,"west")
-    Room.connectRooms(useful_programming,"west",programmer_humor,"east")
-
-    #Build programmer_humor connections
-    Room.connectRooms(programmer_humor,"west",bad_jokes,"east")
-    Room.connectRooms(programmer_humor,"south",sci_fi,"north")
-
-    #Build distractions connections
-    Room.connectRooms(distractions,"south",excuses,"north")
-
-    i = Item("Rock", "This is just a rock.", 1)
-    thought1 = Thought("Thought1",0)
-    i.putInRoom(center_brain)
-    thought1.putInRoom(useful_programming)
-    player.location = center_brain
-    center_brain.playerHere = True
-    Bob = Assignment("Bob the monster", 20, excuses, 7, 1)
-    print(Bob.player_path(Bob.room))
-    input("Press enter to continue...")
-
-    return rooms
-
 def clear():
     os.system('cls' if os.name == 'nt' else 'clear')
 
+#Helper function that prints the player's current situation
 def printSituation():
     clear()
     print(player.location.desc)
@@ -74,14 +32,6 @@ def printSituation():
         print(e)
     print()
 
-def showHelp():
-    clear()
-    print("go <direction> -- moves you in the given direction")
-    print("inventory -- opens your inventory")
-    print("pickup <item> -- picks up the item")
-    print()
-    input("Press enter to continue...")
-
 #Search a list for an item, returning either true or false
 def inList(list, search):
     contained = False
@@ -90,6 +40,8 @@ def inList(list, search):
             contained = True
     return contained
 
+#Search through all rooms for items, and check if thoughts are in their proper destinations. 
+# If they are, return True. If even one is out of place, return false.
 def checkVictory(rooms):
     victory = True
     for room in rooms:
@@ -99,6 +51,7 @@ def checkVictory(rooms):
                     victory = False
     return victory
 
+#Given a room name and the list of rooms, return a room object with that name.
 def findRoomByName(name,roomList):
     if name == "player":
         foundRoom = player
@@ -109,6 +62,8 @@ def findRoomByName(name,roomList):
                 foundRoom = room
     return foundRoom
 
+#Recursive function to find the most efficient path from a starting room to a destination room. 
+# In a top level call, prepath should be [].
 def navigate(start,destination,prepath):
     if start == destination:
         return [destination]
@@ -131,6 +86,8 @@ def navigate(start,destination,prepath):
             path.append(currRoom)
     return path
 
+#Helper function that takes a list of rooms given by navigate() and returns a series of 
+# exit directions to take to reach the destination.
 def directions(path):
     i = 0
     pathLength = len(path)
@@ -143,10 +100,6 @@ def directions(path):
         i += 1
     return directions
 
-
-
-
-
 loading = input("Would you like to load a previous game? ")
 if loading == "yes":
     filecore = input("What save file would you like to load from? ")
@@ -158,7 +111,7 @@ if loading == "yes":
         itemRoomName = itemFile.readline().replace("\n","")
         itemWeight = int(itemFile.readline().replace("\n",""))
         itemLoc = findRoomByName(itemRoomName,rooms)
-        currItem = Item(itemName,itemDesc,itemWeight)
+        currItem = Item(itemName,itemDesc,itemWeight,rooms)
         if itemLoc != player:
             currItem.putInRoom(itemLoc)
         else:
@@ -170,8 +123,7 @@ if loading == "yes":
         monstHealth = int(monsterFile.readline().replace("\n",""))
         monsterRoomName = monsterFile.readline().replace("\n","")
         monsterRoom = findRoomByName(monsterRoomName,rooms)
-        currMonster = Monster(monstName,monstHealth,monsterRoom)
-        monsterRoom.addMonster(currMonster)
+        currMonster = Monster(monstName,monstHealth,monsterRoom,rooms)
 
     def load_world(savename):
         roomsName = savename + "_ROOMS.txt"
@@ -203,7 +155,6 @@ if loading == "yes":
                 line = file.readline().replace("\n","")
                 while line != "END-EXITS":
                     exitList = line.split(",")
-                    print(exitList)
                     currRoom.addExit(exitList[0],exitList[1])
                     line = file.readline().replace("\n","")
 
@@ -218,9 +169,8 @@ if loading == "yes":
     def load_player(filename,rooms):
         file = open(filename, "r")
         location_name = file.readline().replace("\n","")
-        for room in rooms:
-            if room.name == location_name:
-                player.location = room
+        player.location = findRoomByName(location_name,rooms)
+        print(player.location)
         itemLine = file.readline().replace("\n","")
         if "ITEM.txt" in itemLine:
             load_item(itemLine,rooms)
@@ -370,7 +320,7 @@ while playing and player.alive:
                     
                     file.write("START-EXITS" + "\n")
                     for baseExit in room.exits:
-                        file.write(str(baseExit[0]) + "," + str(baseExit[1].name) + "\n")
+                        file.write(str(baseExit[0]) + "," + str(baseExit[1]) + "\n")
                     file.write("END-EXITS" + "\n")
 
                     if len(room.items) > 0:

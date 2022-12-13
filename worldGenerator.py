@@ -79,27 +79,11 @@ def createRandWorld():
 
     #Helper function that connects in a given room to a random place.
     def connectToRandomRoom(room):
-        randomRoom = findOpenDirectionsOfRandomRoom()
-        direction = random.choice(randomRoom[0])
-        Room.connectRooms(room, oppositeDirection(direction), randomRoom[1], direction)
-        print(randomRoom)
-
-    #Helper function that randomly connects two rooms to each other.
-    def constructNonEuclidianPassages(n):
-        for passages in range(n):
-            connectionFound = False
-            while not connectionFound:
-                randomRoom1 = findOpenDirectionsOfRandomRoom()
-                randomRoom2 = findOpenDirectionsOfRandomRoom()
-                openDirections1 = randomRoom1[0]
-                openDirections2 = randomRoom2[0]
-                for direction in openDirections2:
-                    direction = oppositeDirection(direction)
-                openDirections = list(set(openDirections1) and set(openDirections2))
-                if len(openDirections) > 0:
-                    connectionFound = True
-            direction = random.choice(openDirections)
-            Room.connectRooms(randomRoom1[1], direction, randomRoom2[1], oppositeDirection(direction))
+        if findOpenDirectionsOfRoom(room) != None:
+            outgoingDirection = random.choice(findOpenDirectionsOfRoom(room))
+            randomRoom = pickRandomRoomWithDirection(oppositeDirection(outgoingDirection))
+            if randomRoom != None:
+                Room.connectRooms(room, outgoingDirection, randomRoom, oppositeDirection(outgoingDirection))
 
     #Helper function that populates an arbitrary number of monsters into the world
     def populateMonsters(numAssignments,world):
@@ -179,10 +163,7 @@ def createRandWorld():
     
     populateMonsters(5,world)
 
-    """for keyRoom in keyRooms:
-        connectToRandomRoom(keyRoom)"""
-
-    #Add some random shortcuts.
-    constructNonEuclidianPassages(random.randint(6,13))
+    for keyRoom in keyRooms:
+        connectToRandomRoom(keyRoom)
 
     return world

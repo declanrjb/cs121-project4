@@ -1,4 +1,4 @@
-Total Points: 44
+Total Points: 48
 
 (x) “me” command (2 points): Create a command that lets the player see their current status, including their health and/or whatever other attributes you’ve added.
 
@@ -58,7 +58,7 @@ Total Points: 44
 
 ( ) magic (4 points): Create a system where the player has “spells” (or “abilities,” whatever best fits your theme) that they can use (possibly learned during the game). There should be some restriction on how often spells can be cast.
 
-( ) characters (4 points): Characters are neutral beings in the game that you can talk to and interact with. (The “talking to” can be a matter of picking one of several options of things to say from a list.) They should interact with you or the world in some way when you talk to them. This should be different than the “helper” above (that is, if you make a helper character, then you need another character to get credit for this option).
+(x) characters (4 points): Characters are neutral beings in the game that you can talk to and interact with. (The “talking to” can be a matter of picking one of several options of things to say from a list.) They should interact with you or the world in some way when you talk to them. This should be different than the “helper” above (that is, if you make a helper character, then you need another character to get credit for this option).
 
 ( ) modifying the world (4 points): Allow the player to modify rooms/locations in some way, more than just by grabbing/dropping objects. The changes they make should have a real effect on the gameplay. This could be something like lighting a candle that allows you to see the contents of the room, but only if you are carrying matches. It could be digging a hole that traps monsters. It could be turning on a faucet to flood a room that eventually floods nearby rooms. Perhaps you can make it so that the player creates new rooms or locations with an action.
 

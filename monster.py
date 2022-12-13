@@ -148,9 +148,10 @@ class HelpfulGuard(Guard):
             print("[1] Where am I?")
             print("[2] What should I do?")
             print("[3] Ask for directions")
-            print("[4] Leave")
+            print("[4] Ask for possible actions")
+            print("[5] Leave")
             choice = input("")
-            while not (1 <= int(choice) <= 4):
+            while not (1 <= int(choice) <= 5):
                 print("Please choose a valid conversation starter.")
                 choice = input("")
             choice = int(choice)
@@ -185,6 +186,21 @@ class HelpfulGuard(Guard):
                     print("I'm sorry, I don't know where that is.")
                 input("Press enter to continue...")
             elif choice == 4:
+                print("Sure, you can:")
+                print("go <direction> -- move you in the given direction")
+                print("inventory -- open your inventory")
+                print("pickup <item> -- pick up the item")
+                print("help -- summon me or one of my colleagues")
+                print("exit -- quit the game")
+                print("attack <assignment> -- engage an assignment you are confronted with")
+                print("me -- display your current status and inventory")
+                print("inspect <item> -- inspect an item in your vicinity")
+                print("drop <item> -- drop an item from your inventory")
+                print("wait <turns> -- passes the given number of turns of time")
+                print("talk <creature> -- engage someone in conversation")
+                print()
+                input("Press enter to continue...")
+            elif choice == 5:
                 return True
             openingMessage = "Anything else?"
 

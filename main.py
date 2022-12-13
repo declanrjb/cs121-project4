@@ -243,7 +243,7 @@ else:
     player.location = rooms[0]
     rooms[0].playerHere = True
 playing = True
-possibleCommands = ["go","pickup","inventory","help","exit","attack","me","inspect","drop","wait","navigate","talk"]
+possibleCommands = ["go","pickup","inventory","help","exit","attack","me","inspect","drop","wait","talk"]
 while playing and player.alive:
     printSituation()
     commandSuccess = False

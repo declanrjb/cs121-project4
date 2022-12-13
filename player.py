@@ -76,9 +76,8 @@ class Player:
         #Remove all copies of the item
         while item in self.items.keys():
             self.items.pop(item)
-            item.loc = self.location
-            self.location.addItem(item)
-            self.headspace += item.weight
+            item.putInRoom(self.location)
+            self.headspace -= item.weight
     def inventory(self):
         clear()
         print("I'm thinking about:")

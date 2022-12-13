@@ -1,4 +1,4 @@
-Total Points: 48
+Total Points: 50
 
 (x) “me” command (2 points): Create a command that lets the player see their current status, including their health and/or whatever other attributes you’ve added.
 
@@ -18,7 +18,7 @@ Total Points: 48
 
 (x) item stacking (2 points): Make the inventory display ‘(x2)’ if there are two identical items (and so on, if there are more), rather than listing the item name twice.
 
-( ) introducing monsters during play (2 points): Make it so that over time new monsters appear in the world.
+(x) introducing monsters during play (2 points): Make it so that over time new monsters appear in the world.
 
 (x) “wait” command (2 points): In the game as it is, time passes only when you move to a new room. Make it so that you can type a command that just lets time pass. Or implement a trickier version: let the user type a number so they can wait for a number of turns with only one command entry.
 

@@ -1,5 +1,6 @@
 import os
 import random
+from monster import *
 
 def clear():
     os.system('cls' if os.name == 'nt' else 'clear')
@@ -50,3 +51,11 @@ class Thought(Item):
         print("You think: " + "\x1B[3m" + self.blurb + "," + "\x1B[0m" + " and then shelve that for later.")
         print()
         input("Press enter to continue...")
+
+    def putInRoom(self, room):
+        super().putInRoom(room)
+        if room.name == "excuses":
+            print("Unfortunately, by feeding excuses you have created more work for yourself. A new assignment materializes with a roar.")
+            Assignment("HUM 110 Paper",random.randint(10,20),room,random.randint(10,20),random.randint(1,3))
+            print()
+            input("Press enter to continue...")

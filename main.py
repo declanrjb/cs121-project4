@@ -4,11 +4,12 @@ from item import *
 from monster import *
 import os
 import updater
-from worldGenerator import *
+import ctypes
+from worldGenerator import createRandWorld
 
 player = Player()
 
-'''def createWorld():
+def createWorld():
     #Build rooms
     center_brain = Room("center_brain","You are now in the center of the brain.")
     useful_programming = Room("useful_programming","You are now in the chamber of useful programming knowledge, a hallowed space filled mostly with CSC1 121 lecture notes.")
@@ -49,18 +50,17 @@ player = Player()
     print(Bob.player_path(Bob.room))
     input("Press enter to continue...")
 
-    return rooms'''
+    return rooms
 
 def clear():
     os.system('cls' if os.name == 'nt' else 'clear')
 
 def printSituation():
     clear()
-    print(player.location.name)
     print(player.location.desc)
     print()
     if player.location.hasMonsters():
-        print("This room contains the following monsters:")
+        print("This room contains the following creatures:")
         for m in player.location.monsters:
             print(m.name)
         print()
@@ -108,6 +108,40 @@ def findRoomByName(name,roomList):
             if room.name == name:
                 foundRoom = room
     return foundRoom
+
+def navigate(start,destination,prepath):
+    if start == destination:
+        return [destination]
+    else:
+        path = prepath + [start]
+        currRoom = start
+        while currRoom != destination:
+            shortestPath = None
+            targetExit = None
+            for exit in currRoom.exits:
+                exitRoom = exit[1]
+                if (exitRoom in path) != True:
+                    testPath = navigate(exit[1],destination,path)
+                    if (shortestPath == None) or (len(testPath) < len(shortestPath)):
+                        shortestPath = testPath
+                        targetExit = exit[1]
+            if targetExit == None:
+                targetExit = currRoom.exits[random.randint(0,(len(currRoom.exits)-1))][1]
+            currRoom = targetExit
+            path.append(currRoom)
+    return path
+
+def directions(path):
+    i = 0
+    pathLength = len(path)
+    directions = []
+    while i < (pathLength-1):
+        currRoom = path[i]
+        for checkExit in currRoom.exits:
+            if checkExit[1] == path[i+1]:
+                directions.append(checkExit[0])
+        i += 1
+    return directions
 
 
 
@@ -208,11 +242,8 @@ else:
     rooms = createRandWorld()
     player.location = rooms[0]
     rooms[0].playerHere = True
-
-    print(len(rooms))
-    input("press enter to continue")
 playing = True
-possibleCommands = ["go","pickup","inventory","help","exit","attack","me","inspect","drop","wait","navigate"]
+possibleCommands = ["go","pickup","inventory","help","exit","attack","me","inspect","drop","wait","navigate","talk"]
 while playing and player.alive:
     printSituation()
     commandSuccess = False
@@ -240,7 +271,6 @@ while playing and player.alive:
                 while i < turns:
                     updater.updateAll()
                     i += 1
-            
             turns = int(command[5:])
             wait_some_turns(turns)
             print(str(turns) + " time goes by. Time passes strangely in this place.")
@@ -256,9 +286,12 @@ while playing and player.alive:
         elif commandWords[0].lower() == "navigate":  #get directions to any room
             destinationName = command[9:]
             destination = findRoomByName(destinationName,rooms)
-            print("Working...")
-            path = player.navigate(player.location,destination,[])
-            print(player.directions(path))
+            if destination != None:
+                print("Working...")
+                path = player.navigate(player.location,destination,[])
+                print(player.directions(path))
+            else:
+                print("I'm sorry, I don't know where that is.")
             input("Press enter to continue...")
         elif commandWords[0].lower() == "inventory":
             player.inventory()        
@@ -270,7 +303,15 @@ while playing and player.alive:
             targetName = command[7:]
             target = player.location.getMonsterByName(targetName)
             if target != False:
-                player.engageActivity(target)
+                commandSuccess = player.engageActivity(target)
+            else:
+                print("No such monster.")
+                commandSuccess = False
+        elif commandWords[0].lower() == "talk":
+            targetName = command[5:]
+            target = player.location.getMonsterByName(targetName)
+            if target != False:
+                target.interact(player)
             else:
                 print("No such monster.")
                 commandSuccess = False

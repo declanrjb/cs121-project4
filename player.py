@@ -23,6 +23,7 @@ class Player:
         self.location.playerHere = False
         self.location = self.location.getDestination(direction)
         self.location.playerHere = True
+    #Basic pickup function that takes weight into account
     def pickup(self, item):
         if self.headspace - item.weight > 0:
             if item not in self.items.keys():    
@@ -36,42 +37,6 @@ class Player:
                 item.printBlurb()
         else:
             print("Too many thoughts...\n...I need to clear my head a bit.")
-
-    #Function to find the shortest path from one room to another
-    def navigate(self,start,destination,prepath):
-        if start == destination:
-            return [destination]
-        else:
-            path = prepath + [start]
-            currRoom = start
-            while currRoom != destination:
-                shortestPath = None
-                targetExit = None
-                for exit in currRoom.exits:
-                    exitRoom = exit[1]
-                    if (exitRoom in path) != True:
-                        testPath = self.navigate(exit[1],destination,path)
-                        if (shortestPath == None) or (len(testPath) < len(shortestPath)):
-                            shortestPath = testPath
-                            targetExit = exit[1]
-                if targetExit == None:
-                    targetExit = currRoom.exits[random.randint(0,(len(currRoom.exits)-1))][1]
-                currRoom = targetExit
-                path.append(currRoom)
-        return path
-
-    #Helper function that translates paths from navigate into exit directions
-    def directions(self,path):
-        i = 0
-        pathLength = len(path)
-        directions = []
-        while i < (pathLength-1):
-            currRoom = path[i]
-            for checkExit in currRoom.exits:
-                if checkExit[1] == path[i+1]:
-                    directions.append(checkExit[0])
-            i += 1
-        return directions
 
     def drop(self, item):
         #Remove all copies of the item
@@ -92,6 +57,7 @@ class Player:
         print(str(item.desc))
         print()
         input("Press enter to continue...")
+    #Print the player's current status to the screen
     def me(self):
         clear()
         print("Checking self actualization...")
@@ -112,6 +78,7 @@ class Player:
         print()
         print("I have " + str(self.timeLeft) + " time left.")
         input("Press enter to continue...")
+    #Simple function to engage a monster in combat
     def engageActivity(self, mon):
         clear()
         print("You decide to tackle " + mon.name + ".")
@@ -137,10 +104,6 @@ class Player:
         #Regeneration
         if self.health < self.health_max:
             self.health += 1
-        #Assignments cause damage over time
-        '''for assignment in self.location.monsters:
-            if assignment.monsterType in ["Essay", "Test", "Presentation", "ProblemSet"]:
-                self.health -= assignment.damage'''
         #When health reaches 0, you're forced to wait a random amount of time to heal.
         if self.health <= 0:
             print("#@*%")

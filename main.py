@@ -283,16 +283,17 @@ while playing and player.alive:
                 player.pickup(target)
             else:
                 commandSuccess = False
-        elif commandWords[0].lower() == "navigate":  #get directions to any room
-            destinationName = command[9:]
-            destination = findRoomByName(destinationName,rooms)
-            if destination != None:
-                print("Working...")
-                path = player.navigate(player.location,destination,[])
-                print(player.directions(path))
-            else:
-                print("I'm sorry, I don't know where that is.")
+        elif commandWords[0].lower() == "help!":  #summon a random guard to your aid if you get lost
+            print("A labyrinth guard comes running to your rescue!")
             input("Press enter to continue...")
+            labyrinthGuards = []
+            for room in rooms:
+                for monst in room.monsters:
+                    if "Labyrinth Guard" in monst.name:
+                        labyrinthGuards.append(monst)
+            chosenGuard = random.choice(labyrinthGuards)
+            chosenGuard.moveTo(player.location)
+            chosenGuard.interact(player)
         elif commandWords[0].lower() == "inventory":
             player.inventory()        
         elif commandWords[0].lower() == "help":
@@ -304,6 +305,7 @@ while playing and player.alive:
             target = player.location.getMonsterByName(targetName)
             if target != False:
                 commandSuccess = player.engageActivity(target)
+                printSituation()
             else:
                 print("No such monster.")
                 commandSuccess = False

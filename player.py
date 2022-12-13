@@ -128,7 +128,6 @@ class Player:
             print("Not done yet...")
         print()
         input("Press enter to continue...")
-
     def update(self):
         self.timeLeft -= 1
         if self.timeLeft <= 0:

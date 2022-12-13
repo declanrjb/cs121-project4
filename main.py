@@ -60,7 +60,7 @@ def printSituation():
     print(player.location.desc)
     print()
     if player.location.hasMonsters():
-        print("This room contains the following beings:")
+        print("This room contains the following creatures:")
         for m in player.location.monsters:
             print(m.name)
         print()
@@ -108,6 +108,40 @@ def findRoomByName(name,roomList):
             if room.name == name:
                 foundRoom = room
     return foundRoom
+
+def navigate(start,destination,prepath):
+    if start == destination:
+        return [destination]
+    else:
+        path = prepath + [start]
+        currRoom = start
+        while currRoom != destination:
+            shortestPath = None
+            targetExit = None
+            for exit in currRoom.exits:
+                exitRoom = exit[1]
+                if (exitRoom in path) != True:
+                    testPath = navigate(exit[1],destination,path)
+                    if (shortestPath == None) or (len(testPath) < len(shortestPath)):
+                        shortestPath = testPath
+                        targetExit = exit[1]
+            if targetExit == None:
+                targetExit = currRoom.exits[random.randint(0,(len(currRoom.exits)-1))][1]
+            currRoom = targetExit
+            path.append(currRoom)
+    return path
+
+def directions(path):
+    i = 0
+    pathLength = len(path)
+    directions = []
+    while i < (pathLength-1):
+        currRoom = path[i]
+        for checkExit in currRoom.exits:
+            if checkExit[1] == path[i+1]:
+                directions.append(checkExit[0])
+        i += 1
+    return directions
 
 
 
@@ -209,7 +243,7 @@ else:
     player.location = rooms[0]
     rooms[0].playerHere = True
 playing = True
-possibleCommands = ["go","pickup","inventory","help","exit","attack","me","inspect","drop","wait","navigate"]
+possibleCommands = ["go","pickup","inventory","help","exit","attack","me","inspect","drop","wait","navigate","talk"]
 while playing and player.alive:
     printSituation()
     commandSuccess = False
@@ -237,7 +271,6 @@ while playing and player.alive:
                 while i < turns:
                     updater.updateAll()
                     i += 1
-            
             turns = int(command[5:])
             wait_some_turns(turns)
             print(str(turns) + " time goes by. Time passes strangely in this place.")
@@ -270,7 +303,15 @@ while playing and player.alive:
             targetName = command[7:]
             target = player.location.getMonsterByName(targetName)
             if target != False:
-                player.attackMonster(target)
+                commandSuccess = player.engageActivity(target)
+            else:
+                print("No such monster.")
+                commandSuccess = False
+        elif commandWords[0].lower() == "talk":
+            targetName = command[5:]
+            target = player.location.getMonsterByName(targetName)
+            if target != False:
+                target.interact(player)
             else:
                 print("No such monster.")
                 commandSuccess = False

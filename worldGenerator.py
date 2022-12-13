@@ -131,8 +131,6 @@ def createRandWorld():
     world = [center_brain,useful_programming,lazy_hacks,programmer_humor,bad_jokes,sci_fi,productive_thought,distractions,excuses]
     keyRooms = [useful_programming,lazy_hacks,programmer_humor,bad_jokes,sci_fi,productive_thought,distractions,excuses]
 
-    helpyGuard = Guard("Labyrinth Guard the First",center_brain)
-
     
 
     #Connect in the key rooms.
@@ -157,6 +155,10 @@ def createRandWorld():
     usedNames = [None]
     for direction in findOpenDirectionsOfRoom(center_brain):
         buildRandomRooms(center_brain, direction, 4, usedNames)
+
+    helpyGuard = HelpfulGuard("Labyrinth Guard the First",center_brain,world)
+    unhelpyGuard = UnhelpfulGuard("Labyrinth Guard the Second",center_brain,world)
+    stabGuard = StabbyGuard("Labyrinth Guard Who Stabs People Who Ask Tricky Questions",center_brain,world)
 
     #for keyRoom in keyRooms:
         #connectToRandomRoom(keyRoom)

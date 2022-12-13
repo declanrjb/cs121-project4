@@ -16,6 +16,7 @@ class Player:
         self.headspace_max = self.headspace
         self.name = "player"
         self.timeLeft = 1000
+        self.stabWounds = 0
         updater.register(self)
     def goDirection(self, direction):
         self.location.playerHere = False

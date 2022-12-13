@@ -1,6 +1,0 @@
-CPU Pun Here
-no-items
-50
-True
-50
-player

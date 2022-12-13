@@ -1,5 +1,0 @@
-edc
-no-items50
-True
-50
-player

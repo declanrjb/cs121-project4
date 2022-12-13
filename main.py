@@ -53,6 +53,7 @@ def checkVictory(rooms):
 
 #Given a room name and the list of rooms, return a room object with that name.
 def findRoomByName(name,roomList):
+    name = name.lower()
     if name == "player":
         foundRoom = player
     else:

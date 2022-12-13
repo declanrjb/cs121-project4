@@ -114,15 +114,15 @@ def createRandWorld():
             Assignment(name,health,monstRoom,damage,speed,world,type)
 
     #Build the key rooms. 
-    center_brain = Room("center_brain","You are now in the center of the brain. Three labyrinth guards stand ahead, hands on their swords and faces shadowed by their hoods.")
-    useful_programming = Room("useful_programming","You are now in the chamber of useful programming knowledge, a hallowed space filled mostly with CSC1 121 lecture notes.")
-    lazy_hacks = Room("lazy_hacks","You are now in the room of lazy hacks. Every surface, from floor to walls to ceiling, is a chalkboard - but most of the notes you've taken there are covered up by the shelves of Stack Overflow comments.")
-    programmer_humor = Room("programmer_humor","You have entered the sanctum of programmer humor, a place of many memes stolen from many subreddits.")
-    bad_jokes = Room("bad_jokes","You are now in the room of bad jokes. And I mean *really* bad jokes. Abandon hope, all ye who enter here.")
-    sci_fi = Room("sci_fi","You are now in the vault of out of place sci-fi references, a room strangely larger than any other in this brain.")
-    productive_thought = Room("productive_thought","You are now in the room of productive academic thought. Sadly, there's quite a lot of dust here.")
-    distractions = Room("distractions","You are now in the room of distractions - Hey, did you know the new NK Jemisin book just came out?")
-    excuses = Room("excuses","Listen, it's not your fault you've entered the room of excuses. Somebody else made you do it.")
+    center_brain = Room("center of the brain","You are now in the center of the brain. Three labyrinth guards stand ahead, hands on their swords and faces shadowed by their hoods.")
+    useful_programming = Room("chamber of useful programming knowledge","You are now in the chamber of useful programming knowledge, a hallowed space filled mostly with CSC1 121 lecture notes.")
+    lazy_hacks = Room("room of lazy Hacks","You are now in the room of lazy hacks. Every surface, from floor to walls to ceiling, is a chalkboard - but most of the notes you've taken there are covered up by the shelves of Stack Overflow comments.")
+    programmer_humor = Room("sanctum of programmer humor","You have entered the sanctum of programmer humor, a place of many memes stolen from many subreddits.")
+    bad_jokes = Room("room of bad jokes","You are now in the room of bad jokes. And I mean *really* bad jokes. Abandon hope, all ye who enter here.")
+    sci_fi = Room("vault of out of place sci-fi references","You are now in the vault of out of place sci-fi references, a room strangely larger than any other in this brain.")
+    productive_thought = Room("room of productive academic thought","You are now in the room of productive academic thought. Sadly, there's quite a lot of dust here.")
+    distractions = Room("room of distractions","You are now in the room of distractions - Hey, did you know the new NK Jemisin book just came out?")
+    excuses = Room("room of excuses","Listen, it's not your fault you've entered the room of excuses. Somebody else made you do it.")
     world = [center_brain,useful_programming,lazy_hacks,programmer_humor,bad_jokes,sci_fi,productive_thought,distractions,excuses]
     keyRooms = [useful_programming,lazy_hacks,programmer_humor,bad_jokes,sci_fi,productive_thought,distractions,excuses]
 

@@ -63,7 +63,7 @@ class Thought(Item):
     # thought placed in excuses will spawn a new monster.
     def putInRoom(self, room):
         super().putInRoom(room)
-        if room.name == "excuses":
+        if room.name == "Room of Excuses":
             print("Unfortunately, by feeding excuses you have created more work for yourself. A new assignment materializes with a roar.")
             Assignment("HUM 110 Paper",random.randint(10,20),room,random.randint(10,20),random.randint(1,3),self.world)
             print()

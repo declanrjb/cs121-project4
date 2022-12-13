@@ -427,7 +427,7 @@ while playing and player.alive:
             commandSuccess = False
     if timePasses == True:
         updater.updateAll()
-        if checkVictory():
+        if checkVictory(rooms):
             player.ending = "victory"
             playing = False
 

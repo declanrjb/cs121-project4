@@ -113,24 +113,19 @@ class Player:
         input("Press enter to continue...")
     def engageActivity(self, mon):
         clear()
-        if mon.monsterType == "Leisure":
-            print("You take " + str(mon.cost) + " time to " + mon.name + " and feel a bit better!")
-            self.timeLeft -= mon.cost
-            self.me()
+        print("You decide to tackle " + mon.name + ".")
+        print()
+        if mon.monsterType == "Essay":
+            self.timeLeft -= mon.health
+            print("You spend " + str(mon.health) + " time working on " + mon.name +".")
+        if mon.monsterType == "Test":
+            self.health -= mon.health
+            print("You take " + mon.name + ", it's stressful.")
+        if random.random() > mon.health/self.health:
+            print("You've successfully completed " + mon.name + "!")
+            mon.die()
         else:
-            print("You decide to tackle " + mon.name + ".")
-            print()
-            if mon.monsterType == "Essay":
-                self.timeLeft -= mon.health
-                print("You spend " + str(mon.health) + " time working on " + mon.name +".")
-            if mon.monsterType == "Test":
-                self.health -= mon.health
-                print("You take " + mon.name + ", it's stressful.")
-            if random.random() > mon.health/self.health:
-                print("You've successfully completed " + mon.name + "!")
-                mon.die()
-            else:
-                print("Not done yet...")
+            print("Not done yet...")
         print()
         input("Press enter to continue...")
 

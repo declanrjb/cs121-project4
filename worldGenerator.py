@@ -100,7 +100,7 @@ def createRandWorld():
             Room.connectRooms(randomRoom1[1], direction, randomRoom2[1], oppositeDirection(direction))
 
     #Helper function that populates an arbitrary number of monsters into the world
-    def populateMonsters(numAssignments,numLeisures,world):
+    def populateMonsters(numAssignments,world):
         monsterNames = ["HUM 110 Paper 1",
         "HUM 110 Paper 2",
         "HUM 110 Paper 3",
@@ -109,15 +109,23 @@ def createRandWorld():
         "The Dread Lord Math 112",
         "CS Lab Assignment",
         "HUM 110 Reading"]
+        monsterTypes = ["Essay",
+        "Essay",
+        "Essay",
+        "Essay",
+        "Test",
+        "Test",
+        "Essay",
+        "Essay"]
         for n in range(numAssignments):
             #Selects a unique name from the list while scrolling through the range. Currently supports only up to eight assignments.
             name = monsterNames[n]
+            type = monsterTypes[n]
             health = random.randint(1,20)
-            place = random.randint(0,(len(world)-1))
-            monstRoom = world[place]
+            monstRoom = random.choice(world)
             damage = random.randint(1,10)
             speed = random.randint(1,3)
-            Assignment(name,health,monstRoom,damage,speed)
+            Assignment(name,health,monstRoom,damage,speed,world,type)
 
     #Build the key rooms. 
     center_brain = Room("center_brain","You are now in the center of the brain. Three labyrinth guards stand ahead, hands on their swords and faces shadowed by their hoods.")
@@ -163,9 +171,11 @@ def createRandWorld():
 
     epithets = [" the First"," the Second"," the Third"," the Fourth"," the Fifth"," the Sixth"," the Seventh"," the Eighth"," the Ninth"]
     for j in range(0,8):
-        currThought = Thought("Thought" + epithets[j],1)
+        currThought = Thought("Thought" + epithets[j],1,world)
         currThought.pick_blurb(j)
-        currThought.putInRoom(random.choice(world))
+        currThought.generatorPlace(random.choice(world))
+    
+    populateMonsters(5,world)
 
     #for keyRoom in keyRooms:
         #connectToRandomRoom(keyRoom)

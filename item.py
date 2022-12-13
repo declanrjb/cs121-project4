@@ -6,11 +6,12 @@ def clear():
     os.system('cls' if os.name == 'nt' else 'clear')
 
 class Item:
-    def __init__(self, name, desc, weight):
+    def __init__(self, name, desc, weight, world):
         self.name = name
         self.desc = desc
         self.loc = None
         self.weight = weight
+        self.world = world
     def describe(self):
         clear()
         print(self.desc)
@@ -21,8 +22,8 @@ class Item:
         room.addItem(self)
 
 class Thought(Item):
-    def __init__(self, name, weight):
-        Item.__init__(self, name, "This is just a thought.", weight)
+    def __init__(self, name, weight, world):
+        Item.__init__(self, name, "This is just a thought.", weight, world)
         #Declare a preset list of possible blurbs
         self.blurbs = {
             "I really need to do the HUM reading":"productive_thought",
@@ -56,6 +57,9 @@ class Thought(Item):
         super().putInRoom(room)
         if room.name == "excuses":
             print("Unfortunately, by feeding excuses you have created more work for yourself. A new assignment materializes with a roar.")
-            Assignment("HUM 110 Paper",random.randint(10,20),room,random.randint(10,20),random.randint(1,3))
+            Assignment("HUM 110 Paper",random.randint(10,20),room,random.randint(10,20),random.randint(1,3),self.world)
             print()
             input("Press enter to continue...")
+    
+    def generatorPlace(self, room):
+        super().putInRoom(room)

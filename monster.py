@@ -2,11 +2,12 @@ import random
 import updater
 
 class Monster:
-    def __init__(self, name, health, room):
+    def __init__(self, name, health, room, world):
         self.name = name
         self.health = health
         self.room = room
         room.addMonster(self)
+        self.world = world
         updater.register(self)
     def update(self):
         if random.random() < .5:
@@ -21,11 +22,13 @@ class Monster:
     def findPlayer(self):
         """Detects where the player is if the player is in the same
         or an adjacent room."""
+        playerRoom = None
         if self.room.playerHere:
-            return self.room
+            playerRoom = self.room
         for room in self.room.exits:
             if room[1].playerHere:
-                return room[1]
+                playerRoom = room[1]
+        return playerRoom
     #Basic pathfinding
     def player_path(self,start):
         i = 0
@@ -43,47 +46,6 @@ class Monster:
             i += 1
         return path
 
-class Assignment(Monster):
-    def __init__(self, name, health, room, damage, speed):
-        super().__init__(name, health, room)
-        self.damage = damage
-        self.speed = speed
-        self.cooldown = 0
-        
-    def update(self):
-        if (random.randint(0,4) < 2) and (self.room.playerHere != True):
-            path = self.player_path(self.room)
-            #If there's more path than speed, move along the path up to my speed. Else, immediately move to 
-            # the end of the path, without overshooting it.
-            if self.speed <= len(path):
-                self.moveTo(path[(self.speed - 1)])
-            else:
-                self.moveTo(path[(len(path) - 1)])
-
-class Leisure(Monster):
-    monsterType = "Leisure"
-    def __init__self(self, name, health, room, cost, buff):
-        Monster.__init___(self, name, health, room)
-        self.cost = cost #The time it takes to do the activity
-        self.buff = buff #The amount of mental health healed
-
-class Essay(Assignment):
-    monsterType = "Essay"
-
-class Test(Assignment):
-    monsterType = "Test"
-
-class Presentation(Assignment):
-    monsterType = "Presentation"
-
-class ProblemSet(Assignment):
-    monsterType = "Problem Set"
-
-class Guard(Monster):
-    def __init__(self,name,room,world):
-        Monster.__init__(self,name,1,room)
-        self.world = world
-    
     #Helper function that translates paths from navigate into exit directions
     def directions(self,path):
         i = 0
@@ -103,10 +65,6 @@ class Guard(Monster):
             if room.name == name:
                 foundRoom = room
         return foundRoom
-        
-class HelpfulGuard(Guard):
-    def __init__(self,name,room,world):
-        Guard.__init__(self,name,room,world)
 
     #Function to find the shortest path from one room to another
     def navigate(self,start,destination,prepath):
@@ -130,6 +88,56 @@ class HelpfulGuard(Guard):
                 currRoom = targetExit
                 path.append(currRoom)
         return path
+
+class Assignment(Monster):
+    def __init__(self, name, health, room, damage, speed, world, type):
+        super().__init__(name, health, room, world)
+        self.damage = damage
+        self.speed = speed
+        self.cooldown = 0
+        self.world = world
+        self.monsterType = type
+        
+    def update(self):
+        i = 0
+        while i < self.speed:
+            if self.findPlayer() != None:
+                self.moveTo(self.findPlayer())
+            else:
+                self.moveTo(random.choice(self.room.exits)[1])
+            i += 1
+
+
+class Leisure(Monster):
+    monsterType = "Leisure"
+    def __init__self(self, name, health, room, cost, buff):
+        Monster.__init___(self, name, health, room)
+        self.cost = cost #The time it takes to do the activity
+        self.buff = buff #The amount of mental health healed
+
+class Essay(Assignment):
+    monsterType = "Essay"
+
+class Test(Assignment):
+    monsterType = "Test"
+
+class Presentation(Assignment):
+    monsterType = "Presentation"
+
+class ProblemSet(Assignment):
+    monsterType = "Problem Set"
+
+class Guard(Monster):
+    def __init__(self,name,room,world):
+        self.name = name
+        self.health = 1
+        self.room = room
+        room.addMonster(self)
+        self.world = world
+        
+class HelpfulGuard(Guard):
+    def __init__(self,name,room,world):
+        Guard.__init__(self,name,room,world)
     
     def interact(self,player):
         openingMessage = "Well met stranger. What brings you to this place?"

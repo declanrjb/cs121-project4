@@ -421,6 +421,7 @@ while playing and player.alive:
             else:
                 print("No such item.")
                 commandSuccess = False
+        #Drop an item, but only if it's already in the inventory
         elif commandWords[0].lower() == "drop":
             targetName = command[5:]
             dropped = None
@@ -433,10 +434,6 @@ while playing and player.alive:
             else:
                 print("You are not carrying that item.")
                 commandSuccess = False
-        elif commandWords[0].lower() == "checkvictory":
-            print(str(checkVictory(rooms)))
-            print()
-            input("Press enter to continue...")
         else:
             print("Not a valid command")
             commandSuccess = False

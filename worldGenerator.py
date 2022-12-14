@@ -156,7 +156,7 @@ def createRandWorld():
     stabGuard = StabbyGuard("Labyrinth Guard Who Stabs People Who Ask Tricky Questions",center_brain,world)
 
     epithets = [" the First"," the Second"," the Third"," the Fourth"," the Fifth"," the Sixth"," the Seventh"," the Eighth"," the Ninth"]
-    for j in range(0,8):
+    for j in range(0,4):
         currThought = Thought("Thought" + epithets[j],1,world)
         currThought.pick_blurb(j)
         currThought.generatorPlace(random.choice(world))

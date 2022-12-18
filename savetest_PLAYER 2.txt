@@ -1,0 +1,5 @@
+useful_programming
+{<item.Thought object at 0x100cb3ee0>: 1}
+50
+True
+49
